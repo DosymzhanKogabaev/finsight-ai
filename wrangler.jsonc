@@ -1,0 +1,18 @@
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "finsight-ai",
+	"main": "src-backend/index.ts",
+	"compatibility_date": "2025-07-11",
+	"assets": {
+		"binding": "ASSETS",
+		"directory": "./dist",
+		"not_found_handling": "single-page-application",
+		"run_worker_first": true
+	},
+	"observability": {
+		"enabled": true
+	},
+	"d1_databases": [],
+	"vars": {},
+	"r2_buckets": []
+}
