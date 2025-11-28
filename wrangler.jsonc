@@ -12,7 +12,14 @@
 	"observability": {
 		"enabled": true
 	},
-	"d1_databases": [],
+	"d1_databases": [
+		{
+			"binding": "DB_D1",
+			"database_name": "finsight-ai-db",
+			"database_id": "c698e9b8-4156-472b-8f77-96cea224b98b",
+			"migrations_dir": "src-backend/db/migrations"
+		}
+	],
 	"vars": {},
 	"r2_buckets": []
 }

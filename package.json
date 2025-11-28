@@ -8,11 +8,14 @@
 		"build": "tsc -b && vite build",
 		"lint": "eslint .",
 		"preview": "npm run build && vite preview",
-		"deploy": "npm run build && wrangler deploy"
+		"deploy": "npm run build && wrangler deploy",
+		"db:migration:generate": "drizzle-kit generate",
+		"db:migration:migrate": "drizzle-kit migrate"
 	},
 	"devDependencies": {
 		"@cloudflare/vitest-pool-workers": "^0.8.19",
 		"@cloudflare/workers-types": "^4.20251126.0",
+		"@types/node": "^24.10.1",
 		"@types/react": "^19.2.7",
 		"@types/react-dom": "^19.2.3",
 		"typescript": "^5.5.2",
@@ -22,6 +25,8 @@
 	"dependencies": {
 		"@vitejs/plugin-react-swc": "^4.2.2",
 		"chanfana": "^2.8.3",
+		"drizzle-kit": "^0.31.7",
+		"drizzle-orm": "^0.44.7",
 		"itty-router": "^5.0.22",
 		"path": "^0.12.7",
 		"react": "^19.2.0",

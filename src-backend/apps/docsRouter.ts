@@ -189,7 +189,7 @@ function generateMainDocsPage(): string {
 		.map(
 			([appName, app]) => `
     <div class="api-section">
-      <h2>${app.icon} ${app.title.replace('Welcome Way - ', '')}</h2>
+      <h2>${app.icon} ${app.title.replace('Finsight AI - ', '')}</h2>
       <p class="description">${app.description}</p>
       <a href="/docs/${appName}" class="api-link">View ${appName.charAt(0).toUpperCase() + appName.slice(1)} Documentation</a>
       <a href="/docs/${appName}/openapi.json" class="api-link">OpenAPI Schema</a>
@@ -204,7 +204,7 @@ function generateMainDocsPage(): string {
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Welcome Way - API Documentation</title>
+    <title>Finsight AI - API Documentation</title>
     <style>
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -269,7 +269,7 @@ function generateMainDocsPage(): string {
 </head>
 <body>
     <div class="container">
-        <h1>Welcome Way - API Documentation</h1>
+        <h1>Finsight AI - API Documentation</h1>
         <div class="stats">
             <p>Available APIs: ${Object.keys(API_APPS).length}</p>
         </div>
@@ -277,7 +277,7 @@ function generateMainDocsPage(): string {
         ${appSections}
 
         <div class="footer">
-            <p>Welcome Way Community Platform API v1.0.0</p>
+            <p>Finsight AI API v1.0.0</p>
         </div>
     </div>
 </body>
