@@ -24,6 +24,7 @@ const config = defineConfig({
 		alias: {
 			'@/src-frontend': path.resolve(import.meta.url, './src-frontend'),
 			'@/src-backend': path.resolve(import.meta.url, './src-backend'),
+			'@/shared': path.resolve(import.meta.url, './shared'),
 		},
 	},
 });

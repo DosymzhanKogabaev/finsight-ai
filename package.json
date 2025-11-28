@@ -10,7 +10,9 @@
 		"preview": "npm run build && vite preview",
 		"deploy": "npm run build && wrangler deploy",
 		"db:migration:generate": "drizzle-kit generate",
-		"db:migration:migrate": "drizzle-kit migrate"
+		"db:migration:apply:local": "wrangler d1 migrations apply finsight-ai-db --local",
+		"db:migration:apply:remote": "wrangler d1 migrations apply finsight-ai-db --remote",
+		"db:execute:local": "wrangler d1 execute finsight-ai-db --local --command"
 	},
 	"devDependencies": {
 		"@cloudflare/vitest-pool-workers": "^0.8.19",
@@ -23,7 +25,9 @@
 		"wrangler": "^4.50.0"
 	},
 	"dependencies": {
+		"@tsndr/cloudflare-worker-jwt": "^3.2.0",
 		"@vitejs/plugin-react-swc": "^4.2.2",
+		"bcryptjs": "^3.0.3",
 		"chanfana": "^2.8.3",
 		"drizzle-kit": "^0.31.7",
 		"drizzle-orm": "^0.44.7",

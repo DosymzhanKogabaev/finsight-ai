@@ -1,3 +1,6 @@
+import { registerAuthRoutes } from './auth/urls';
 import { RegisterAppRoutes } from './types';
 
-export const registerAppRoutes: RegisterAppRoutes = (_router, _urlPrefix = null) => {};
+export const registerAppRoutes: RegisterAppRoutes = (router, urlPrefix = null) => {
+	registerAuthRoutes(router, urlPrefix);
+};

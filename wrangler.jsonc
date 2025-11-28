@@ -20,6 +20,9 @@
 			"migrations_dir": "src-backend/db/migrations"
 		}
 	],
-	"vars": {},
+	"vars": {
+		"ACCESS_TOKEN_EXPIRES_IN": 3600,
+		"REFRESH_TOKEN_EXPIRES_IN": 604800
+	},
 	"r2_buckets": []
 }
