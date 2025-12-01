@@ -8,6 +8,11 @@ import jwt from '@tsndr/cloudflare-worker-jwt';
 
 export async function generateTokens(env: Env, user: User): Promise<JwtTokens> {
 	const SECRET_TOKEN = env.JWT_SECRET_TOKEN;
+	if (!SECRET_TOKEN || typeof SECRET_TOKEN !== 'string') {
+		throw new Error(
+			'JWT_SECRET_TOKEN is not configured. Please set it in .dev.vars for local development or in wrangler.jsonc vars for production.'
+		);
+	}
 	const currentTimestamp = Math.floor(Date.now() / 1000);
 	const accessTokenExpiresIn = Number(env.ACCESS_TOKEN_EXPIRES_IN);
 	const refreshTokenExpiresIn = Number(env.REFRESH_TOKEN_EXPIRES_IN);
@@ -37,6 +42,11 @@ export async function generateTokens(env: Env, user: User): Promise<JwtTokens> {
 
 export async function refreshAccessToken(env: Env, refreshToken: string) {
 	const SECRET_TOKEN = env.JWT_SECRET_TOKEN;
+	if (!SECRET_TOKEN || typeof SECRET_TOKEN !== 'string') {
+		throw new Error(
+			'JWT_SECRET_TOKEN is not configured. Please set it in .dev.vars for local development or in wrangler.jsonc vars for production.'
+		);
+	}
 	const currentTimestamp = Math.floor(Date.now() / 1000);
 	const accessTokenExpiresIn = Number(env.ACCESS_TOKEN_EXPIRES_IN);
 	const accessExpiresIn = currentTimestamp + accessTokenExpiresIn;

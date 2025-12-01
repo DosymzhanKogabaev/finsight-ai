@@ -20,7 +20,12 @@ const RESPONSE_SCHEMA = z.object({
 export class PublicRegisterAPI extends OpenAPIRoute {
 	schema = {
 		request: { body: { content: { 'application/json': { schema: REQUEST_BODY_SCHEMA } } } },
-		responses: { '200': { content: { 'application/json': { schema: RESPONSE_SCHEMA } } } },
+		responses: {
+			'200': {
+				description: 'User successfully registered',
+				content: { 'application/json': { schema: RESPONSE_SCHEMA } },
+			},
+		},
 	} as any;
 
 	async handle(_request: IRequest, env: Env, _ctx: ExecutionContext) {
