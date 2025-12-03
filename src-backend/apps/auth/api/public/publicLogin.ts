@@ -1,6 +1,7 @@
 import { LoginUserRequest, LoginUserResponse } from '@/shared';
 import { generateTokens } from '@/src-backend/apps/auth/api/services/jwt';
 import { getUserByEmail } from '@/src-backend/apps/auth/api/services/user';
+import { extractDeviceInfo } from '@/src-backend/apps/auth/utils/device';
 import { handleError } from '@/src-backend/apps/common';
 import { verifyPassword } from '@/src-backend/apps/utils/password';
 import { OpenAPIRoute } from 'chanfana';
@@ -29,7 +30,7 @@ export class PublicLoginAPI extends OpenAPIRoute {
 		},
 	} as any;
 
-	async handle(_request: IRequest, env: Env, _ctx: ExecutionContext) {
+	async handle(request: IRequest, env: Env, _ctx: ExecutionContext) {
 		try {
 			const data = await this.getValidatedData<typeof this.schema>();
 			const loginData = { ...(data.body as LoginUserRequest) };
@@ -46,8 +47,11 @@ export class PublicLoginAPI extends OpenAPIRoute {
 				throw new InvalidCredentialsException('Invalid password');
 			}
 
-			// Generate tokens
-			const tokens = await generateTokens(env, user);
+			// Extract device info
+			const deviceInfo = extractDeviceInfo(request);
+
+			// Generate tokens and store refresh token in KV
+			const tokens = await generateTokens(env, user, deviceInfo);
 
 			return {
 				access_token: tokens.access_token,

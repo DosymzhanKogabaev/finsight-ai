@@ -5,4 +5,5 @@ interface Env {
 	REFRESH_TOKEN_EXPIRES_IN: number;
 	ASSETS: Fetcher;
 	AVATARS_BUCKET: R2Bucket;
+	REFRESH_TOKENS_KV: KVNamespace;
 }

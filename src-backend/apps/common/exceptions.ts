@@ -7,3 +7,10 @@ export class ServiceException extends Error {
 		Object.setPrototypeOf(this, new.target.prototype);
 	}
 }
+
+export class BadRequestException extends ServiceException {
+	constructor(message: string = 'Bad request') {
+		super(message, 400);
+		this.name = 'BadRequestException';
+	}
+}

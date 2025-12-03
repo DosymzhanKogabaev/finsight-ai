@@ -7,4 +7,6 @@ export type RegisterUserRequest = {
 export type RegisterUserResponse = {
 	id: number;
 	email: string;
+	access_token: string;
+	refresh_token: string;
 };

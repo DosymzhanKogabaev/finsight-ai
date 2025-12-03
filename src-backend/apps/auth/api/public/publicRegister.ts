@@ -1,5 +1,7 @@
 import { RegisterUserRequest, RegisterUserResponse } from '@/shared';
+import { generateTokens } from '@/src-backend/apps/auth/api/services/jwt';
 import { createUser, getUserByEmail } from '@/src-backend/apps/auth/api/services/user';
+import { extractDeviceInfo } from '@/src-backend/apps/auth/utils/device';
 import { handleError } from '@/src-backend/apps/common';
 import { OpenAPIRoute } from 'chanfana';
 import { IRequest } from 'itty-router';
@@ -15,6 +17,8 @@ const REQUEST_BODY_SCHEMA = z.object({
 const RESPONSE_SCHEMA = z.object({
 	id: z.number(),
 	email: z.string().email(),
+	access_token: z.string(),
+	refresh_token: z.string(),
 }) satisfies z.ZodType<RegisterUserResponse>;
 
 export class PublicRegisterAPI extends OpenAPIRoute {
@@ -37,9 +41,16 @@ export class PublicRegisterAPI extends OpenAPIRoute {
 				throw new UserAlreadyExistsException('User already exists');
 			}
 			const newUser = await createUser(env, userData);
+
+			// Extract device info and generate tokens
+			const deviceInfo = extractDeviceInfo(_request);
+			const tokens = await generateTokens(env, newUser, deviceInfo);
+
 			return {
 				id: newUser.id,
 				email: newUser.email,
+				access_token: tokens.access_token,
+				refresh_token: tokens.refresh_token,
 			};
 		} catch (error) {
 			console.error('Register API error:', error);

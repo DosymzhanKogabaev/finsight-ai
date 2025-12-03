@@ -5,8 +5,9 @@ import {
 	NotCorrectTokenTypeException,
 } from '@/src-backend/apps/auth/exceptions/jwt';
 import jwt from '@tsndr/cloudflare-worker-jwt';
+import { deleteRefreshToken, getRefreshTokenInfo, storeRefreshToken } from './refreshTokenStorage';
 
-export async function generateTokens(env: Env, user: User): Promise<JwtTokens> {
+export async function generateTokens(env: Env, user: User, deviceInfo?: { ip: string; ua: string; device: string }): Promise<JwtTokens> {
 	const SECRET_TOKEN = env.JWT_SECRET_TOKEN;
 	if (!SECRET_TOKEN || typeof SECRET_TOKEN !== 'string') {
 		throw new Error(
@@ -37,6 +38,11 @@ export async function generateTokens(env: Env, user: User): Promise<JwtTokens> {
 
 	const refreshToken = await jwt.sign(refreshPayload, SECRET_TOKEN);
 
+	// Store refresh token info in KV if device info is provided
+	if (deviceInfo) {
+		await storeRefreshToken(env, user.id, refreshPayload.jti, deviceInfo, currentTimestamp, refreshExpiresIn);
+	}
+
 	return { access_token: accessToken, refresh_token: refreshToken };
 }
 
@@ -60,8 +66,20 @@ export async function refreshAccessToken(env: Env, refreshToken: string) {
 	if (!payload.token_type || payload.token_type !== 'refresh') {
 		throw new NotCorrectTokenTypeException();
 	}
-	if (!payload?.user_id || !payload?.exp) {
+	if (!payload?.user_id || !payload?.exp || !payload?.jti) {
 		throw new InvalidTokenPayloadException();
+	}
+
+	// Validate refresh token exists in KV storage
+	const tokenInfo = await getRefreshTokenInfo(env, payload.user_id, payload.jti);
+	if (!tokenInfo) {
+		throw new InvalidOrExpiredTokenException();
+	}
+
+	// Check if token has expired
+	if (tokenInfo.expiresAt < currentTimestamp) {
+		await deleteRefreshToken(env, payload.user_id, payload.jti);
+		throw new InvalidOrExpiredTokenException();
 	}
 
 	const newAccessToken = await jwt.sign(

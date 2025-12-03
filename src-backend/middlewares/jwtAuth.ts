@@ -3,7 +3,7 @@ import jwt from '@tsndr/cloudflare-worker-jwt';
 import { IRequest } from 'itty-router';
 
 // ====================
-// Публичные функции
+// Public functions
 // ====================
 
 export default async function auth(request: IRequest, env: Env, _ctx: ExecutionContext): Promise<Response | void> {
@@ -21,9 +21,8 @@ export default async function auth(request: IRequest, env: Env, _ctx: ExecutionC
 		} catch (error) {
 			return new Response('JWT verification failed', { status: 401 });
 		}
-	} else {
-		return new Response('Invalid url structure', { status: 401 });
 	}
+	// If not a private route, continue without authentication
 }
 
 export async function verifyJwt(token: string, env: Env): Promise<Response | JwtPayload> {
@@ -49,7 +48,7 @@ export async function verifyJwt(token: string, env: Env): Promise<Response | Jwt
 }
 
 // ====================
-// Приватные функции
+// Private functions
 // ====================
 
 function checkTokenExpired(payload: JwtPayload): boolean {
@@ -60,16 +59,6 @@ function checkTokenExpired(payload: JwtPayload): boolean {
 
 	return false;
 }
-
-// function getToken(request: Request): string | null {
-//   const authHeader = request.headers.get('Authorization');
-
-//   if (!authHeader || !authHeader.startsWith('Token ')) {
-//     return null;
-//   }
-
-//   return authHeader.split(' ')[1].trim();
-// }
 
 function getJwt(request: Request): string | null {
 	const authHeader = request.headers.get('Authorization');
