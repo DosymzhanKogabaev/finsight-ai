@@ -6,10 +6,10 @@ import { registerAppRoutes } from './appUrls';
 const _router: RouterTypeItty = Router();
 const router: RouterOpenApiType = fromIttyRouter(_router);
 router.registry.registerComponent('securitySchemes', 'BearerAuth', {
-	type: 'apiKey',
-	in: 'header',
-	name: 'Authorization',
-	description: 'JWT token (format: JWT {token})',
+	type: 'http',
+	scheme: 'bearer',
+	bearerFormat: 'JWT',
+	description: 'JWT access token',
 });
 
 // Регистрируем все маршруты

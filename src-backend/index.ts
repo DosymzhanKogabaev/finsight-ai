@@ -2,8 +2,8 @@ import { IRequest } from 'itty-router';
 import apiRouter from './apps/apiRouter';
 import docsRouter from './apps/docsRouter';
 import { composeMiddlewares, Middleware } from './middlewareComposer';
-import { optionsMiddleware } from './middlewares/options';
-import { serveAssetsMiddleware } from './middlewares/serveAssets';
+import { optionsMiddleware, serveAssetsMiddleware } from './middlewares';
+import auth from './middlewares/jwtAuth';
 
 const middlewares: Middleware[] = [optionsMiddleware, serveAssetsMiddleware];
 
@@ -32,17 +32,29 @@ async function serveApi(request: Request, env: Env, ctx: ExecutionContext): Prom
 	return response;
 }
 
+async function handleProtectedRoute(request: IRequest, env: Env, ctx: ExecutionContext, handler: Function): Promise<Response> {
+	const authResult = await auth(request, env, ctx);
+
+	if (authResult) {
+		return authResult;
+	}
+
+	const userId = request.user?.user_id;
+
+	if (!userId) {
+		return new Response('user id is required', { status: 400 });
+	}
+
+	return await handler(request, env, ctx);
+}
+
 export default {
 	async fetch(request: IRequest, env: Env, ctx: ExecutionContext): Promise<Response> {
 		try {
-			// const host = request.headers.get('Host');
-			// const rateLimitResponse = await checkRateLimit(request, env);
-			// if (rateLimitResponse && !host?.includes('localhost'))
-			//   return rateLimitResponse;
-
 			const handler = await composeMiddlewares(middlewares, serveApi);
+			const isPrivateRoute = new URL(request.url).pathname.includes('private');
 
-			const response = await handler(request, env, ctx);
+			const response = isPrivateRoute ? await handleProtectedRoute(request, env, ctx, handler) : await handler(request, env, ctx);
 
 			return applyCors(response || new Response('Not found', { status: 404 }), request);
 		} catch (error) {

@@ -7,7 +7,7 @@ import { verifyPassword } from '@/src-backend/apps/utils/password';
 import { OpenAPIRoute } from 'chanfana';
 import { IRequest } from 'itty-router';
 import { z } from 'zod';
-import { InvalidCredentialsException } from '../../exceptions/user';
+import { InvalidCredentialsException } from '../../../exceptions/user';
 
 const REQUEST_BODY_SCHEMA = z.object({
 	email: z.string().email(),

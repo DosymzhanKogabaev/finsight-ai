@@ -62,9 +62,15 @@ function checkTokenExpired(payload: JwtPayload): boolean {
 
 function getJwt(request: Request): string | null {
 	const authHeader = request.headers.get('Authorization');
-	if (!authHeader || !authHeader.startsWith('JWT ')) {
-		return null;
+	if (!authHeader) return null;
+
+	const [scheme, token] = authHeader.split(' ');
+	if (!token) return null;
+
+	const prefix = scheme.toLowerCase();
+	if (prefix === 'bearer' || prefix === 'jwt') {
+		return token.trim();
 	}
 
-	return authHeader.split(' ')[1].trim();
+	return null;
 }

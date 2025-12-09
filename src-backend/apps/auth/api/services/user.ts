@@ -10,6 +10,12 @@ export async function getUserByEmail(env: Env, email: string): Promise<User> {
 	return user;
 }
 
+export async function getUserById(env: Env, userId: number): Promise<User> {
+	const db = initDbConnect(env);
+	const [user] = await db.select().from(userSchema).where(eq(userSchema.id, userId)).limit(1);
+	return user;
+}
+
 export async function createUser(env: Env, user: RegisterUserRequest): Promise<User> {
 	const db = initDbConnect(env);
 	const passwordHash = await hashPassword(user.password);

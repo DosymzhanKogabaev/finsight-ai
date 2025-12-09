@@ -14,3 +14,10 @@ export class BadRequestException extends ServiceException {
 		this.name = 'BadRequestException';
 	}
 }
+
+export class UnauthorizedException extends ServiceException {
+	constructor(message: string = 'Unauthorized') {
+		super(message, 401);
+		this.name = 'UnauthorizedException';
+	}
+}

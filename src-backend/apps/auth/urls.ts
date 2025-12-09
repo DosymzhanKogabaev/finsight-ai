@@ -1,6 +1,6 @@
 import { RouterOpenApiType } from '@/src-backend/types';
 import { RegisterAppRoutes } from '../types';
-import { PublicLoginAPI, PublicRefreshAPI, PublicRegisterAPI } from './api/public';
+import { PrivateMeAPI, PublicLoginAPI, PublicRefreshAPI, PublicRegisterAPI } from './api/endpoints';
 
 export const registerAuthRoutes: RegisterAppRoutes = (router: RouterOpenApiType, urlPrefix = null) => {
 	// Public routes
@@ -9,4 +9,6 @@ export const registerAuthRoutes: RegisterAppRoutes = (router: RouterOpenApiType,
 	router.post(`${urlPrefix}/public/auth/refresh`, PublicRefreshAPI);
 
 	// Private routes (require authentication)
+	// Note: authMiddleware is applied automatically for /private/* routes in the middleware
+	router.get(`${urlPrefix}/private/auth/me`, PrivateMeAPI);
 };
