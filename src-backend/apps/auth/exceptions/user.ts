@@ -20,3 +20,10 @@ export class UserNotFoundException extends ServiceException {
 		this.name = 'UserNotFoundException';
 	}
 }
+
+export class TurnstileVerificationFailedException extends ServiceException {
+	constructor(message: string = 'Turnstile verification failed') {
+		super(message, 403);
+		this.name = 'TurnstileVerificationFailedException';
+	}
+}
