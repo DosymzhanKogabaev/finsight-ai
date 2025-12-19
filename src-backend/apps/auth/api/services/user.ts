@@ -29,3 +29,8 @@ export async function createUser(env: Env, user: RegisterUserRequest): Promise<U
 		.returning();
 	return newUser;
 }
+
+export async function updateUserAvatar(env: Env, userId: number, avatarUrl: string): Promise<void> {
+	const db = initDbConnect(env);
+	await db.update(userSchema).set({ avatar_url: avatarUrl }).where(eq(userSchema.id, userId));
+}

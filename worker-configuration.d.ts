@@ -11,4 +11,5 @@ interface Env {
 	DB_D1: D1Database;
 	ASSETS: Fetcher;
 	REFRESH_TOKENS_KV: KVNamespace;
+	R2_BUCKET: R2Bucket;
 }

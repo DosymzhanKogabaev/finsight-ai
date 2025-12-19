@@ -38,12 +38,12 @@ export class PublicRegisterAPI extends OpenAPIRouteWithTurnstile {
 			const data = await this.getValidatedData<typeof this.schema>();
 			const { turnstile_token, ...userRequest } = data.body;
 			const userData = { ...userRequest };
-			
+
 			let user = await getUserByEmail(env, userData.email);
 			if (user) {
 				throw new UserAlreadyExistsException('User already exists');
 			}
-			
+
 			// Turnstile token is verified by middleware before reaching here
 			const newUser = await createUser(env, userData);
 
@@ -51,12 +51,13 @@ export class PublicRegisterAPI extends OpenAPIRouteWithTurnstile {
 			const deviceInfo = extractDeviceInfo(request);
 			const tokens = await generateTokens(env, newUser, deviceInfo);
 
-			return {
+			const response = {
 				id: newUser.id,
 				email: newUser.email,
 				access_token: tokens.access_token,
 				refresh_token: tokens.refresh_token,
 			};
+			return Response.json(response);
 		} catch (error) {
 			console.error('Register API error:', error);
 			return handleError(error);

@@ -30,5 +30,10 @@
 			"id": "aed2e35c12764e87956347bdddd5162d"
 		}
 	],
-	"r2_buckets": []
+	"r2_buckets": [
+		{
+			"binding": "R2_BUCKET",
+			"bucket_name": "finsight-ai-r2"
+		}
+	]
 }

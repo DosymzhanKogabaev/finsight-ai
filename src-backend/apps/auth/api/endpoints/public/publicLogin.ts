@@ -53,10 +53,11 @@ export class PublicLoginAPI extends OpenAPIRoute {
 			// Generate tokens and store refresh token in KV
 			const tokens = await generateTokens(env, user, deviceInfo);
 
-			return {
+			const response = {
 				access_token: tokens.access_token,
 				refresh_token: tokens.refresh_token,
 			};
+			return Response.json(response);
 		} catch (error) {
 			console.error('Login API error:', error);
 			return handleError(error);

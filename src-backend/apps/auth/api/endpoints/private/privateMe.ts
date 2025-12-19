@@ -47,7 +47,7 @@ export class PrivateMeAPI extends OpenAPIRoute {
 			}
 
 			// Return user data (excluding password_hash and deleted_at)
-			return {
+			const response = {
 				id: user.id,
 				email: user.email,
 				full_name: user.full_name,
@@ -61,6 +61,7 @@ export class PrivateMeAPI extends OpenAPIRoute {
 				created_at: user.created_at,
 				updated_at: user.updated_at,
 			};
+			return Response.json(response);
 		} catch (error) {
 			console.error('Get me API error:', error);
 			return handleError(error);

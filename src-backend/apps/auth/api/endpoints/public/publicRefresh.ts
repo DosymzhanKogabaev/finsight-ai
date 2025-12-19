@@ -39,9 +39,10 @@ export class PublicRefreshAPI extends OpenAPIRoute {
 			// Refresh the access token
 			const newAccessToken = await refreshAccessToken(env, refreshToken);
 
-			return {
+			const response = {
 				access_token: newAccessToken,
 			};
+			return Response.json(response);
 		} catch (error) {
 			console.error('Refresh token API error:', error);
 			return handleError(error);
