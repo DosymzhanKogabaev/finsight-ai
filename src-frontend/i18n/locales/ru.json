@@ -1,0 +1,80 @@
+{
+	"common": {
+		"welcome": "Добро пожаловать",
+		"loading": "Загрузка...",
+		"error": "Ошибка",
+		"success": "Успешно",
+		"cancel": "Отмена",
+		"save": "Сохранить",
+		"delete": "Удалить",
+		"edit": "Редактировать",
+		"confirm": "Подтвердить",
+		"back": "Назад",
+		"next": "Далее",
+		"submit": "Отправить",
+		"close": "Закрыть",
+		"search": "Поиск",
+		"filter": "Фильтр",
+		"sort": "Сортировка",
+		"settings": "Настройки",
+		"profile": "Профиль",
+		"logout": "Выйти",
+		"login": "Войти",
+		"register": "Регистрация"
+	},
+	"auth": {
+		"email": "Электронная почта",
+		"password": "Пароль",
+		"fullName": "Полное имя",
+		"confirmPassword": "Подтвердите пароль",
+		"forgotPassword": "Забыли пароль?",
+		"dontHaveAccount": "Нет аккаунта?",
+		"alreadyHaveAccount": "Уже есть аккаунт?",
+		"signIn": "Войти",
+		"signUp": "Зарегистрироваться",
+		"signOut": "Выйти",
+		"emailRequired": "Электронная почта обязательна",
+		"passwordRequired": "Пароль обязателен",
+		"passwordMin": "Пароль должен содержать минимум 8 символов",
+		"invalidEmail": "Неверный адрес электронной почты",
+		"loginSuccess": "Вход выполнен успешно",
+		"registerSuccess": "Регистрация прошла успешно",
+		"loginFailed": "Ошибка входа",
+		"registerFailed": "Ошибка регистрации"
+	},
+	"profile": {
+		"title": "Профиль",
+		"avatar": "Аватар",
+		"uploadAvatar": "Загрузить аватар",
+		"deleteAvatar": "Удалить аватар",
+		"updateProfile": "Обновить профиль",
+		"changePassword": "Изменить пароль",
+		"currentPassword": "Текущий пароль",
+		"newPassword": "Новый пароль"
+	},
+	"language": {
+		"title": "Язык",
+		"english": "English",
+		"russian": "Русский",
+		"kazakh": "Қазақша"
+	},
+	"error": {
+		"generic": "Что-то пошло не так",
+		"network": "Ошибка сети",
+		"notFound": "Не найдено",
+		"unauthorized": "Не авторизован",
+		"forbidden": "Запрещено",
+		"serverError": "Ошибка сервера"
+	},
+	"validation": {
+		"required": "Это поле обязательно",
+		"email": "Пожалуйста, введите корректный адрес электронной почты",
+		"minLength": "Минимальная длина {{min}} символов",
+		"maxLength": "Максимальная длина {{max}} символов",
+		"passwordMatch": "Пароли должны совпадать"
+	},
+	"turnstile": {
+		"verifying": "Проверяем, что вы человек...",
+		"failed": "Проверка не удалась. Пожалуйста, попробуйте снова."
+	}
+}

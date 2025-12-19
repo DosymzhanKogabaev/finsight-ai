@@ -1,0 +1,80 @@
+{
+	"common": {
+		"welcome": "Қош келдіңіз",
+		"loading": "Жүктелуде...",
+		"error": "Қате",
+		"success": "Сәтті",
+		"cancel": "Болдырмау",
+		"save": "Сақтау",
+		"delete": "Жою",
+		"edit": "Өңдеу",
+		"confirm": "Растау",
+		"back": "Артқа",
+		"next": "Келесі",
+		"submit": "Жіберу",
+		"close": "Жабу",
+		"search": "Іздеу",
+		"filter": "Сүзгі",
+		"sort": "Сұрыптау",
+		"settings": "Баптаулар",
+		"profile": "Профиль",
+		"logout": "Шығу",
+		"login": "Кіру",
+		"register": "Тіркелу"
+	},
+	"auth": {
+		"email": "Электрондық пошта",
+		"password": "Құпия сөз",
+		"fullName": "Толық аты",
+		"confirmPassword": "Құпия сөзді растау",
+		"forgotPassword": "Құпия сөзді ұмыттыңыз ба?",
+		"dontHaveAccount": "Аккаунтыңыз жоқ па?",
+		"alreadyHaveAccount": "Аккаунтыңыз бар ма?",
+		"signIn": "Кіру",
+		"signUp": "Тіркелу",
+		"signOut": "Шығу",
+		"emailRequired": "Электрондық пошта міндетті",
+		"passwordRequired": "Құпия сөз міндетті",
+		"passwordMin": "Құпия сөз кемінде 8 таңбадан тұруы керек",
+		"invalidEmail": "Электрондық пошта мекенжайы дұрыс емес",
+		"loginSuccess": "Кіру сәтті болды",
+		"registerSuccess": "Тіркелу сәтті болды",
+		"loginFailed": "Кіру қатесі",
+		"registerFailed": "Тіркелу қатесі"
+	},
+	"profile": {
+		"title": "Профиль",
+		"avatar": "Аватар",
+		"uploadAvatar": "Аватарды жүктеу",
+		"deleteAvatar": "Аватарды жою",
+		"updateProfile": "Профильді жаңарту",
+		"changePassword": "Құпия сөзді өзгерту",
+		"currentPassword": "Ағымдағы құпия сөз",
+		"newPassword": "Жаңа құпия сөз"
+	},
+	"language": {
+		"title": "Тіл",
+		"english": "English",
+		"russian": "Русский",
+		"kazakh": "Қазақша"
+	},
+	"error": {
+		"generic": "Бірдеңе дұрыс болмады",
+		"network": "Желі қатесі",
+		"notFound": "Табылмады",
+		"unauthorized": "Авторизацияланбаған",
+		"forbidden": "Тыйым салынған",
+		"serverError": "Сервер қатесі"
+	},
+	"validation": {
+		"required": "Бұл өріс міндетті",
+		"email": "Дұрыс электрондық пошта мекенжайын енгізіңіз",
+		"minLength": "Минималды ұзындығы {{min}} таңба",
+		"maxLength": "Максималды ұзындығы {{max}} таңба",
+		"passwordMatch": "Құпия сөздер сәйкес болуы керек"
+	},
+	"turnstile": {
+		"verifying": "Сіз адам екеніңізді тексеруде...",
+		"failed": "Тексеру сәтсіз болды. Қайталап көріңіз."
+	}
+}
