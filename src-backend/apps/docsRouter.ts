@@ -7,7 +7,7 @@ const docsRouter = Router();
 const API_APPS = {
 	auth: {
 		title: 'Finsight AI - Auth API',
-		description: 'TODO',
+		description: 'Authentication and user management API',
 		icon: '🔐',
 		pathPattern: '/api/auth/', // Routes starting with this pattern belong to auth
 	},
