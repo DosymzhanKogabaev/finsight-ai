@@ -38,6 +38,20 @@ export async function updateUserAvatar(env: Env, userId: number, avatarUrl: stri
 export async function deleteUserAvatar(env: Env, userId: number): Promise<void> {
 	const db = initDbConnect(env);
 
+	// Note: We need 2 queries here because SQLite/D1 doesn't support returning OLD values
+	// Get the current avatar URL before updating (1st query)
+	const [user] = await db
+		.select({ avatar_url: userSchema.avatar_url })
+		.from(userSchema)
+		.where(eq(userSchema.id, userId))
+		.limit(1);
+
+	// Update to remove avatar URL (2nd query)
 	await db.update(userSchema).set({ avatar_url: null }).where(eq(userSchema.id, userId));
-	await env.R2_BUCKET.delete(`${userId}/avatar.png`);
+
+	// Delete the old avatar from R2 if it exists
+	if (user?.avatar_url) {
+		console.log('Deleting avatar from R2:', user.avatar_url);
+		await env.R2_BUCKET.delete(user.avatar_url);
+	}
 }
