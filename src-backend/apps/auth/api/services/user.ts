@@ -2,7 +2,7 @@ import { RegisterUserRequest, User } from '@/shared';
 import { hashPassword } from '@/src-backend/apps/utils/password';
 import { initDbConnect } from '@/src-backend/db';
 import { userSchema } from '@/src-backend/db/schema';
-import { eq, sql } from 'drizzle-orm';
+import { eq } from 'drizzle-orm';
 
 export async function getUserByEmail(env: Env, email: string): Promise<User> {
 	const db = initDbConnect(env);
@@ -38,14 +38,6 @@ export async function updateUserAvatar(env: Env, userId: number, avatarUrl: stri
 export async function deleteUserAvatar(env: Env, userId: number): Promise<void> {
 	const db = initDbConnect(env);
 
-	const result = await db.get<{ avatar_url: string | null }>(sql`
-		UPDATE users
-		SET avatar_url = NULL
-		WHERE id = ${userId}
-		RETURNING avatar_url
-	`);
-
-	if (result?.avatar_url) {
-		await env.R2_BUCKET.delete(result.avatar_url);
-	}
+	await db.update(userSchema).set({ avatar_url: null }).where(eq(userSchema.id, userId));
+	await env.R2_BUCKET.delete(`${userId}/avatar.png`);
 }
