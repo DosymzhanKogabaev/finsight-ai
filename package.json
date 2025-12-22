@@ -29,6 +29,7 @@
 		"@emotion/styled": "^11.14.1",
 		"@mui/icons-material": "^7.3.6",
 		"@mui/material": "^7.3.6",
+		"@reduxjs/toolkit": "^2.11.2",
 		"@tsndr/cloudflare-worker-jwt": "^3.2.0",
 		"@vitejs/plugin-react-swc": "^4.2.2",
 		"bcryptjs": "^3.0.3",
@@ -41,6 +42,7 @@
 		"react": "^19.2.0",
 		"react-dom": "^19.2.0",
 		"react-i18next": "^16.5.0",
+		"react-redux": "^9.2.0",
 		"react-router-dom": "^7.11.0",
 		"react-turnstile": "^1.1.4",
 		"url": "^0.11.4"

@@ -1,3 +1,4 @@
+import { RefreshAccessTokenRequest, RefreshAccessTokenResponse } from '@/shared';
 import { refreshAccessToken } from '@/src-backend/apps/auth/api/services/jwt';
 import { BadRequestException, handleError } from '@/src-backend/apps/common';
 import { OpenAPIRoute } from 'chanfana';
@@ -6,11 +7,11 @@ import { z } from 'zod';
 
 const REQUEST_BODY_SCHEMA = z.object({
 	refresh_token: z.string(),
-});
+}) satisfies z.ZodType<RefreshAccessTokenRequest>;
 
 const RESPONSE_SCHEMA = z.object({
 	access_token: z.string(),
-});
+}) satisfies z.ZodType<RefreshAccessTokenResponse>;
 
 /**
  * POST /api/public/auth/refresh

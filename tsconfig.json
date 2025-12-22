@@ -7,7 +7,8 @@
 			"@/assets/*": ["src-frontend/assets/*"],
 			"@/components/*": ["src-frontend/components/*"],
 			"@worker-config": ["worker-configuration.d.ts"],
-			"@/shared": ["shared"]
+			"@/shared": ["shared"],
+			"@/shared/*": ["shared/*"]
 		},
 		"target": "es2021",
 		"lib": ["es2021", "DOM", "DOM.Iterable"],
