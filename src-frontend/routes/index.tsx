@@ -1,14 +1,15 @@
 import { createBrowserRouter, Navigate } from 'react-router-dom';
-import { SignIn, SignUp } from '../pages';
-import { AuthRoutes } from './routes';
+import { ProtectedRoute } from '../components';
+import { Home, Profile, SignIn, SignUp } from '../pages';
+import { AuthRoutes, MainRoutes } from './routes';
 
 /**
  * Application router configuration
  */
 export const router = createBrowserRouter([
 	{
-		path: '/',
-		element: <Navigate to={AuthRoutes.SIGN_UP} replace />,
+		path: MainRoutes.HOME,
+		element: <Home />,
 	},
 	{
 		path: AuthRoutes.SIGN_IN,
@@ -19,7 +20,15 @@ export const router = createBrowserRouter([
 		element: <SignUp />,
 	},
 	{
+		path: MainRoutes.PROFILE,
+		element: (
+			<ProtectedRoute>
+				<Profile />
+			</ProtectedRoute>
+		),
+	},
+	{
 		path: '*',
-		element: <Navigate to={AuthRoutes.SIGN_UP} replace />,
+		element: <Navigate to={MainRoutes.HOME} replace />,
 	},
 ]);

@@ -9,4 +9,5 @@ export interface UserState {
 	loginInfo: FetchInfo;
 	registerInfo: FetchInfo;
 	refreshAccessTokenInfo: FetchInfo;
+	getMeInfo: FetchInfo;
 }

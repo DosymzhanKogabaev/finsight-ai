@@ -1,5 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
+import { onStoreChanged } from './slices/user/storage';
 import userReducer from './slices/user/userSlice';
 
 export const store = configureStore({
@@ -15,3 +16,7 @@ export const useAppDispatch: () => AppDispatch = useDispatch;
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 
 export type AppStore = typeof store;
+
+store.subscribe(() => {
+	onStoreChanged(store);
+});

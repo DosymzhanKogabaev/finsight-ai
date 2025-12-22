@@ -1,6 +1,5 @@
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@mui/material/styles';
-import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { Provider as ReduxProvider } from 'react-redux';
 import { RouterProvider } from 'react-router-dom';
@@ -16,12 +15,10 @@ if (!rootElement) {
 }
 
 createRoot(rootElement).render(
-	<StrictMode>
-		<ReduxProvider store={store}>
-			<ThemeProvider theme={theme}>
-				<CssBaseline />
-				<RouterProvider router={router} />
-			</ThemeProvider>
-		</ReduxProvider>
-	</StrictMode>
+	<ReduxProvider store={store}>
+		<ThemeProvider theme={theme}>
+			<CssBaseline />
+			<RouterProvider router={router} />
+		</ThemeProvider>
+	</ReduxProvider>
 );

@@ -1,19 +1,34 @@
-import { Box, Button, Link, Paper, TextField, Typography } from '@mui/material';
+import { Alert, Box, Button, CircularProgress, Link, Paper, TextField, Typography } from '@mui/material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { AppHeader, AppLayout, LanguageSwitcher, PageContainer } from '../../components';
-import { AuthRoutes } from '../../routes/routes';
+import { loginUser } from '../../redux/slices/user/asyncReducers';
+import { useAppDispatch } from '../../redux/store';
+import { AuthRoutes, MainRoutes } from '../../routes/routes';
 
 export const SignIn = () => {
 	const { t } = useTranslation();
+	const navigate = useNavigate();
+	const dispatch = useAppDispatch();
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
+	const [loading, setLoading] = useState(false);
+	const [error, setError] = useState<string | null>(null);
 
-	const handleSubmit = (e: React.FormEvent) => {
+	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
-		console.log('Sign in:', { email, password });
-		// TODO: Implement sign in logic
+		setError(null);
+		setLoading(true);
+
+		try {
+			await dispatch(loginUser({ email, password })).unwrap();
+			navigate(MainRoutes.PROFILE);
+		} catch (err: any) {
+			setError(err.message || t('auth.loginFailed'));
+		} finally {
+			setLoading(false);
+		}
 	};
 
 	return (
@@ -36,6 +51,12 @@ export const SignIn = () => {
 					</Typography>
 
 					<Box component="form" onSubmit={handleSubmit} sx={{ width: '100%' }}>
+						{error && (
+							<Alert severity="error" sx={{ mb: 2 }}>
+								{error}
+							</Alert>
+						)}
+
 						<TextField
 							fullWidth
 							label={t('auth.email')}
@@ -45,6 +66,7 @@ export const SignIn = () => {
 							required
 							value={email}
 							onChange={(e) => setEmail(e.target.value)}
+							disabled={loading}
 						/>
 
 						<TextField
@@ -56,10 +78,19 @@ export const SignIn = () => {
 							required
 							value={password}
 							onChange={(e) => setPassword(e.target.value)}
+							disabled={loading}
 						/>
 
-						<Button fullWidth variant="contained" size="large" type="submit" sx={{ mt: 3, mb: 2 }}>
-							{t('auth.signIn')}
+						<Button
+							fullWidth
+							variant="contained"
+							size="large"
+							type="submit"
+							disabled={loading}
+							sx={{ mt: 3, mb: 2 }}
+							startIcon={loading ? <CircularProgress size={20} color="inherit" /> : undefined}
+						>
+							{loading ? t('common.loading') : t('auth.signIn')}
 						</Button>
 
 						<Box sx={{ textAlign: 'center' }}>

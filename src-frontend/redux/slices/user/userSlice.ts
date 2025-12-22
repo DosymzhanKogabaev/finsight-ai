@@ -3,7 +3,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../store';
 import { FetchState } from '../../types';
 import { createAsyncReducers } from '../../utils/createAsyncReducers';
-import { loginUser, refreshAccessToken, registerUser } from './asyncReducers';
+import { getMe, loginUser, refreshAccessToken, registerUser } from './asyncReducers';
 import { getUserStateFromLocalStorage } from './storage';
 import { UserState } from './types';
 
@@ -24,6 +24,10 @@ const DEFAULT_STATE: UserState = {
 		status: FetchState.IDLE,
 		error: null,
 	},
+	getMeInfo: {
+		status: FetchState.IDLE,
+		error: null,
+	},
 };
 
 const initialState: UserState = getUserStateFromLocalStorage() || DEFAULT_STATE;
@@ -36,12 +40,9 @@ export const userSlice = createSlice({
 			state.accessToken = action.payload.accessToken;
 			state.refreshToken = action.payload.refreshToken;
 			state.isAuthenticated = true;
-			localStorage.setItem('access_token', action.payload.accessToken);
-			localStorage.setItem('refresh_token', action.payload.refreshToken);
 		},
 		setAccessToken: (state, action: PayloadAction<string>) => {
 			state.accessToken = action.payload;
-			localStorage.setItem('access_token', action.payload);
 		},
 		setCurrentUser: (state, action: PayloadAction<UserMeResponse>) => {
 			state.currentUser = action.payload;
@@ -51,8 +52,6 @@ export const userSlice = createSlice({
 			state.accessToken = null;
 			state.refreshToken = null;
 			state.isAuthenticated = false;
-			localStorage.removeItem('access_token');
-			localStorage.removeItem('refresh_token');
 		},
 	},
 	extraReducers: (builder) => {
@@ -61,6 +60,7 @@ export const userSlice = createSlice({
 			asyncThunk: loginUser,
 			infoKey: 'loginInfo',
 			onFulfilled: (state, action) => {
+				console.log('action', action.payload.access_token);
 				state.accessToken = action.payload.access_token;
 				state.refreshToken = action.payload.refresh_token;
 				state.isAuthenticated = true;
@@ -82,6 +82,14 @@ export const userSlice = createSlice({
 			infoKey: 'refreshAccessTokenInfo',
 			onFulfilled: (state, action) => {
 				state.accessToken = action.payload.access_token;
+			},
+		});
+		createAsyncReducers<UserState, UserMeResponse>({
+			builder,
+			asyncThunk: getMe,
+			infoKey: 'getMeInfo',
+			onFulfilled: (state, action) => {
+				state.currentUser = action.payload;
 			},
 		});
 	},

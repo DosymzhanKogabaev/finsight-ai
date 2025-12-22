@@ -1,24 +1,55 @@
-import { Box, Button, Link, Paper, TextField, Typography } from '@mui/material';
+import { Alert, Box, Button, CircularProgress, Link, Paper, TextField, Typography } from '@mui/material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import Turnstile from 'react-turnstile';
 import { AppHeader, AppLayout, LanguageSwitcher, PageContainer } from '../../components';
-import { AuthRoutes } from '../../routes/routes';
+import { registerUser } from '../../redux/slices/user/asyncReducers';
+import { useAppDispatch } from '../../redux/store';
+import { AuthRoutes, MainRoutes } from '../../routes/routes';
 
 export const SignUp = () => {
 	const [isVerified, setIsVerified] = useState(false);
-	const [token, setToken] = useState('');
+	const [turnstileToken, setTurnstileToken] = useState('');
 	const [fullName, setFullName] = useState('');
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
+	const [loading, setLoading] = useState(false);
+	const [error, setError] = useState<string | null>(null);
 	const { t, i18n } = useTranslation();
+	const navigate = useNavigate();
+	const dispatch = useAppDispatch();
 
-	const handleSubmit = (e: React.FormEvent) => {
+	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
-		console.log('Sign up:', { fullName, email, password, token });
-		// TODO: Implement sign up logic
+
+		if (!isVerified) {
+			setError(t('turnstile.failed'));
+			return;
+		}
+
+		setError(null);
+		setLoading(true);
+
+		try {
+			await dispatch(
+				registerUser({
+					full_name: fullName,
+					email,
+					password,
+					turnstile_token: turnstileToken,
+				})
+			).unwrap();
+			navigate(MainRoutes.PROFILE);
+		} catch (err: any) {
+			setError(err.message || t('auth.registerFailed'));
+			// TODO: retry turnstile
+		} finally {
+			setLoading(false);
+		}
 	};
+	// TODO: add validators for email, password, full name
+	// TODO: add proper error handling through i18n (probably global handler)
 
 	return (
 		<AppLayout>
@@ -40,6 +71,12 @@ export const SignUp = () => {
 					</Typography>
 
 					<Box component="form" onSubmit={handleSubmit} sx={{ width: '100%' }}>
+						{error && (
+							<Alert severity="error" sx={{ mb: 2 }}>
+								{error}
+							</Alert>
+						)}
+
 						<TextField
 							fullWidth
 							label={t('auth.fullName')}
@@ -48,6 +85,7 @@ export const SignUp = () => {
 							required
 							value={fullName}
 							onChange={(e) => setFullName(e.target.value)}
+							disabled={loading}
 						/>
 
 						<TextField
@@ -59,6 +97,7 @@ export const SignUp = () => {
 							required
 							value={email}
 							onChange={(e) => setEmail(e.target.value)}
+							disabled={loading}
 						/>
 
 						<TextField
@@ -70,6 +109,7 @@ export const SignUp = () => {
 							required
 							value={password}
 							onChange={(e) => setPassword(e.target.value)}
+							disabled={loading}
 						/>
 
 						<Box sx={{ my: 3, display: 'flex', justifyContent: 'center', height: '72px' }}>
@@ -77,20 +117,29 @@ export const SignUp = () => {
 								sitekey="0x4AAAAAACHWD8GD0z7k1dXg"
 								language={i18n.language}
 								onVerify={(token) => {
-									setToken(token);
+									setTurnstileToken(token);
 									setIsVerified(true);
 								}}
 								theme="light"
 								retry="auto"
 								retryInterval={1000}
 								onError={() => {
-									console.log('error');
+									setIsVerified(false);
+									setError(t('turnstile.failed'));
 								}}
 							/>
 						</Box>
 
-						<Button fullWidth variant="contained" size="large" type="submit" disabled={!isVerified} sx={{ mt: 2, mb: 2 }}>
-							{t('common.register')}
+						<Button
+							fullWidth
+							variant="contained"
+							size="large"
+							type="submit"
+							disabled={!isVerified || loading}
+							sx={{ mt: 2, mb: 2 }}
+							startIcon={loading ? <CircularProgress size={20} color="inherit" /> : undefined}
+						>
+							{loading ? t('common.loading') : t('common.register')}
 						</Button>
 
 						<Box sx={{ textAlign: 'center' }}>

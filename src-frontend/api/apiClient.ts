@@ -79,16 +79,7 @@ export class ApiClient {
 		// Build final URL
 		let apiPrefix: string = import.meta.env.VITE_API_URL;
 
-		if (!apiPrefix) {
-			console.error('VITE_API_URL is not defined in environment variables');
-			throw new Error('API URL is not configured. Please check your environment variables.');
-		}
-
-		if (!apiPrefix.endsWith('/')) {
-			apiPrefix = `${apiPrefix}/`;
-		}
-
-		const finalUrl = `${apiPrefix}${url}`;
+		let finalUrl = apiPrefix ? `${apiPrefix}${url}` : url;
 
 		try {
 			const response = await fetch(finalUrl, fetchOptions);
@@ -144,10 +135,7 @@ export class ApiClient {
 
 			const responseData = await response.json();
 
-			return {
-				status: response.status,
-				data: responseData,
-			} as unknown as T;
+			return responseData as T;
 		} catch (error) {
 			// Log network errors
 			if (error instanceof TypeError && error.message === 'Load failed') {
