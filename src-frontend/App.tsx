@@ -1,8 +1,8 @@
+import { Box, Button, Link, Paper, TextField, Typography } from '@mui/material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import Turnstile from 'react-turnstile';
-import './App.css';
-import { LanguageSwitcher } from './components/LanguageSwitcher';
+import { AppHeader, AppLayout, LanguageSwitcher, PageContainer } from './components';
 
 function App() {
 	const [_isVerified, setIsVerified] = useState(false);
@@ -10,67 +10,66 @@ function App() {
 	const { t, i18n } = useTranslation();
 
 	return (
-		<div style={{ padding: '2rem' }}>
-			<div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
-				<h1>{t('common.welcome')}</h1>
-				<LanguageSwitcher />
-			</div>
+		<AppLayout>
+			{/* Header with language switcher */}
+			<AppHeader title={t('common.welcome')} rightContent={<LanguageSwitcher />} />
 
-			<div style={{ maxWidth: '400px', margin: '0 auto' }}>
-				<h2>{t('auth.signUp')}</h2>
-
-				<div style={{ marginBottom: '1rem' }}>
-					<label>{t('auth.fullName')}</label>
-					<input type="text" placeholder={t('auth.fullName')} style={{ width: '100%', padding: '0.5rem' }} />
-				</div>
-
-				<div style={{ marginBottom: '1rem' }}>
-					<label>{t('auth.email')}</label>
-					<input type="email" placeholder={t('auth.email')} style={{ width: '100%', padding: '0.5rem' }} />
-				</div>
-
-				<div style={{ marginBottom: '1rem' }}>
-					<label>{t('auth.password')}</label>
-					<input type="password" placeholder={t('auth.password')} style={{ width: '100%', padding: '0.5rem' }} />
-				</div>
-
-				<div style={{ margin: '1.5rem 0', display: 'flex', justifyContent: 'center' }}>
-					<Turnstile
-						sitekey="0x4AAAAAACHWD8GD0z7k1dXg"
-						language={i18n.language}
-						onVerify={(token) => {
-							setToken(token);
-							setIsVerified(true);
-						}}
-						theme="dark"
-						retry="auto"
-						retryInterval={1000}
-						onError={() => {
-							console.log('error');
-						}}
-					/>
-				</div>
-
-				<button
-					onClick={() => console.log(token)}
-					style={{
+			{/* Main Content */}
+			<PageContainer centerContent>
+				<Paper
+					elevation={3}
+					sx={{
+						p: { xs: 3, sm: 4 },
+						display: 'flex',
+						flexDirection: 'column',
+						alignItems: 'center',
 						width: '100%',
-						padding: '0.75rem',
-						backgroundColor: '#3b82f6',
-						color: 'white',
-						border: 'none',
-						borderRadius: '0.375rem',
-						cursor: 'pointer',
 					}}
 				>
-					{t('common.register')}
-				</button>
+					<Typography component="h2" variant="h4" sx={{ mb: 3, textAlign: 'center' }}>
+						{t('auth.signUp')}
+					</Typography>
 
-				<p style={{ marginTop: '1rem', textAlign: 'center' }}>
-					{t('auth.alreadyHaveAccount')} <a href="#">{t('auth.signIn')}</a>
-				</p>
-			</div>
-		</div>
+					<Box component="form" sx={{ width: '100%' }}>
+						<TextField fullWidth label={t('auth.fullName')} placeholder={t('auth.fullName')} margin="normal" required />
+
+						<TextField fullWidth label={t('auth.email')} type="email" placeholder={t('auth.email')} margin="normal" required />
+
+						<TextField fullWidth label={t('auth.password')} type="password" placeholder={t('auth.password')} margin="normal" required />
+
+						<Box sx={{ my: 3, display: 'flex', justifyContent: 'center', height: '72px' }}>
+							<Turnstile
+								sitekey="0x4AAAAAACHWD8GD0z7k1dXg"
+								language={i18n.language}
+								onVerify={(token) => {
+									setToken(token);
+									setIsVerified(true);
+								}}
+								theme="light"
+								retry="auto"
+								retryInterval={1000}
+								onError={() => {
+									console.log('error');
+								}}
+							/>
+						</Box>
+
+						<Button fullWidth variant="contained" size="large" onClick={() => console.log(token)} sx={{ mt: 2, mb: 2 }}>
+							{t('common.register')}
+						</Button>
+
+						<Box sx={{ textAlign: 'center' }}>
+							<Typography variant="body2" color="text.secondary">
+								{t('auth.alreadyHaveAccount')}{' '}
+								<Link href="#" underline="hover">
+									{t('auth.signIn')}
+								</Link>
+							</Typography>
+						</Box>
+					</Box>
+				</Paper>
+			</PageContainer>
+		</AppLayout>
 	);
 }
 

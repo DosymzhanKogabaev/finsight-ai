@@ -25,6 +25,10 @@
 		"wrangler": "^4.50.0"
 	},
 	"dependencies": {
+		"@emotion/react": "^11.14.0",
+		"@emotion/styled": "^11.14.1",
+		"@mui/icons-material": "^7.3.6",
+		"@mui/material": "^7.3.6",
 		"@tsndr/cloudflare-worker-jwt": "^3.2.0",
 		"@vitejs/plugin-react-swc": "^4.2.2",
 		"bcryptjs": "^3.0.3",

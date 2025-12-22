@@ -1,8 +1,11 @@
+import CssBaseline from '@mui/material/CssBaseline';
+import { ThemeProvider } from '@mui/material/styles';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './App.js';
 import './i18n/config'; // Initialize i18next
 import './index.css';
+import { theme } from './theme/theme';
 
 const rootElement = document.getElementById('root');
 if (!rootElement) {
@@ -11,6 +14,9 @@ if (!rootElement) {
 
 createRoot(rootElement).render(
 	<StrictMode>
-		<App />
+		<ThemeProvider theme={theme}>
+			<CssBaseline />
+			<App />
+		</ThemeProvider>
 	</StrictMode>
 );

@@ -1,3 +1,5 @@
+import LanguageIcon from '@mui/icons-material/Language';
+import { Box, FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
 export const LanguageSwitcher = () => {
@@ -8,27 +10,22 @@ export const LanguageSwitcher = () => {
 	};
 
 	return (
-		<div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-			<label htmlFor="language-select" style={{ fontSize: '0.875rem', fontWeight: 500 }}>
-				{t('language.title')}:
-			</label>
-			<select
-				id="language-select"
-				value={i18n.language}
-				onChange={(e) => changeLanguage(e.target.value)}
-				style={{
-					padding: '0.5rem 0.75rem',
-					border: '1px solid #d1d5db',
-					borderRadius: '0.375rem',
-					backgroundColor: 'white',
-					fontSize: '0.875rem',
-					cursor: 'pointer',
-				}}
-			>
-				<option value="en">{t('language.english')}</option>
-				<option value="ru">{t('language.russian')}</option>
-				<option value="kk">{t('language.kazakh')}</option>
-			</select>
-		</div>
+		<Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+			<LanguageIcon color="action" />
+			<FormControl size="small" sx={{ minWidth: 120 }}>
+				<InputLabel id="language-select-label">{t('language.title')}</InputLabel>
+				<Select
+					labelId="language-select-label"
+					id="language-select"
+					value={i18n.language}
+					label={t('language.title')}
+					onChange={(e) => changeLanguage(e.target.value)}
+				>
+					<MenuItem value="en">{t('language.english')}</MenuItem>
+					<MenuItem value="ru">{t('language.russian')}</MenuItem>
+					<MenuItem value="kk">{t('language.kazakh')}</MenuItem>
+				</Select>
+			</FormControl>
+		</Box>
 	);
 };

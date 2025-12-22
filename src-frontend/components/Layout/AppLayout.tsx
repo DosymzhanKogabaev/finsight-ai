@@ -1,0 +1,29 @@
+import { Box } from '@mui/material';
+import { ReactNode } from 'react';
+
+interface AppLayoutProps {
+	children: ReactNode;
+}
+
+/**
+ * Mobile-first responsive layout component
+ *
+ * This is the top-level wrapper for your entire app.
+ * Individual components (AppHeader, PageContainer) handle their own max-width and centering.
+ */
+export const AppLayout = ({ children }: AppLayoutProps) => {
+	return (
+		<Box
+			sx={{
+				width: 'var(--xs)',
+				minHeight: '100vh',
+				margin: '0 auto',
+				display: 'flex',
+				flexDirection: 'column',
+				backgroundColor: 'background.default',
+			}}
+		>
+			{children}
+		</Box>
+	);
+};
