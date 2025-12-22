@@ -1,8 +1,8 @@
-import LanguageIcon from '@mui/icons-material/Language';
 import { Box, FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import { ThemeToggle } from './ThemeToggle';
 
-export const LanguageSwitcher = () => {
+export const ThemeLanguageSwitchers = () => {
 	const { i18n, t } = useTranslation();
 
 	const changeLanguage = (lng: string) => {
@@ -11,7 +11,7 @@ export const LanguageSwitcher = () => {
 
 	return (
 		<Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-			<LanguageIcon color="action" />
+			<ThemeToggle />
 			<FormControl size="small" sx={{ minWidth: 120 }}>
 				<InputLabel id="language-select-label">{t('language.title')}</InputLabel>
 				<Select

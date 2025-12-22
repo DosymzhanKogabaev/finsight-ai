@@ -1,7 +1,7 @@
 import { Box } from '@mui/material';
 import { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
-import { LanguageSwitcher } from '../LanguageSwitcher';
+import { ThemeLanguageSwitchers } from '../ThemeLanguageSwitchers';
 import { AppHeader } from './AppHeader';
 import { PageContainer } from './PageContainer';
 
@@ -28,7 +28,7 @@ export const AppLayout = ({ children }: AppLayoutProps) => {
 				backgroundColor: 'background.default',
 			}}
 		>
-			<AppHeader title={t('common.welcome')} rightContent={<LanguageSwitcher />} />
+			<AppHeader title={t('common.welcome')} rightContent={<ThemeLanguageSwitchers />} />
 			<PageContainer>{children}</PageContainer>
 		</Box>
 	);
