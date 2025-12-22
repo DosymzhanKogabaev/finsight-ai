@@ -3,8 +3,6 @@ import { ReactNode } from 'react';
 
 interface PageContainerProps {
 	children: ReactNode;
-	centerContent?: boolean;
-	noPadding?: boolean;
 }
 
 /**
@@ -18,20 +16,14 @@ interface PageContainerProps {
  * - xl: 1280px (full-width dashboards)
  * - false: no max-width constraint
  */
-export const PageContainer = ({ children, centerContent = false, noPadding = false }: PageContainerProps) => {
+export const PageContainer = ({ children }: PageContainerProps) => {
 	return (
 		<Box
 			sx={{
 				width: '100%',
 				mx: 'auto',
 				px: { xs: 2, sm: 3, md: 4 },
-				py: noPadding ? 0 : { xs: 2, sm: 3, md: 4 },
-				...(centerContent && {
-					display: 'flex',
-					flexDirection: 'column',
-					justifyContent: 'center',
-					flex: 1,
-				}),
+				py: { xs: 2, sm: 3, md: 4 },
 			}}
 		>
 			{children}
