@@ -8,14 +8,22 @@ import auth from './middlewares/jwtAuth';
 const middlewares: Middleware[] = [optionsMiddleware, cdnMiddleware, serveAssetsMiddleware];
 
 function applyCors(response: Response, request: Request): Response {
-	if (request.headers.has('Origin')) {
-		const newResponse = new Response(response.body, response);
-		newResponse.headers.set('Access-Control-Allow-Origin', request.headers.get('Origin') || '*');
-
-		return newResponse;
+	const origin = request.headers.get('Origin');
+	if (!origin) {
+		return response;
 	}
 
-	return response;
+	const newResponse = new Response(response.body, response);
+
+	// Set comprehensive CORS headers
+	newResponse.headers.set('Access-Control-Allow-Origin', origin);
+	newResponse.headers.set('Access-Control-Allow-Credentials', 'true');
+	newResponse.headers.set('Access-Control-Allow-Methods', 'DELETE, GET, OPTIONS, PATCH, POST, PUT, HEAD');
+	newResponse.headers.set('Access-Control-Allow-Headers', '*');
+	newResponse.headers.set('Access-Control-Expose-Headers', '*');
+	newResponse.headers.set('Vary', 'Origin');
+
+	return newResponse;
 }
 
 async function serveApi(request: Request, env: Env, ctx: ExecutionContext): Promise<Response | null> {
@@ -36,21 +44,34 @@ async function handleProtectedRoute(request: IRequest, env: Env, ctx: ExecutionC
 	const authResult = await auth(request, env, ctx);
 
 	if (authResult) {
-		return authResult;
+		// Apply CORS to auth error responses
+		return applyCors(authResult, request);
 	}
 
 	const userId = request.user?.user_id;
 
 	if (!userId) {
-		return new Response('user id is required', { status: 400 });
+		const errorResponse = new Response('user id is required', { status: 400 });
+		return applyCors(errorResponse, request);
 	}
 
+	// Return handler response (CORS will be applied in main handler)
 	return await handler(request, env, ctx);
 }
 
 export default {
 	async fetch(request: IRequest, env: Env, ctx: ExecutionContext): Promise<Response> {
 		try {
+			// Handle OPTIONS preflight requests early
+			if (request.method === 'OPTIONS') {
+				const optionsResponse = await optionsMiddleware(request, env, ctx, async () => {
+					return new Response(null, { status: 200 });
+				});
+				if (optionsResponse) {
+					return optionsResponse;
+				}
+			}
+
 			const handler = await composeMiddlewares(middlewares, serveApi);
 			const isPrivateRoute = new URL(request.url).pathname.includes('private');
 
@@ -60,7 +81,8 @@ export default {
 		} catch (error) {
 			console.error(error);
 
-			return new Response('Server error', { status: 500 });
+			const errorResponse = new Response('Server error', { status: 500 });
+			return applyCors(errorResponse, request);
 		}
 	},
 };

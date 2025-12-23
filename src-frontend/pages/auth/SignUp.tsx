@@ -7,6 +7,7 @@ import { EmailField, FullNameField, PasswordField } from '../../components/field
 import { registerUser } from '../../redux/slices/user/asyncReducers';
 import { useAppDispatch } from '../../redux/store';
 import { AuthRoutes, MainRoutes } from '../../routes/routes';
+import { getErrorMessage } from '../../utils/errorHandler';
 import { validateRegisterForm } from '../../utils/validators';
 
 export const SignUp = () => {
@@ -50,7 +51,7 @@ export const SignUp = () => {
 			).unwrap();
 			navigate(MainRoutes.PROFILE);
 		} catch (err: any) {
-			setError(err.message || t('auth.registerFailed'));
+			setError(getErrorMessage(err));
 		} finally {
 			setLoading(false);
 		}

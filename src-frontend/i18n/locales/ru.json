@@ -64,7 +64,17 @@
 		"notFound": "Не найдено",
 		"unauthorized": "Не авторизован",
 		"forbidden": "Запрещено",
-		"serverError": "Ошибка сервера"
+		"serverError": "Ошибка сервера",
+		"ServiceException": "Произошла ошибка сервиса",
+		"BadRequestException": "Неверные данные запроса",
+		"UnauthorizedException": "У вас нет доступа к этому ресурсу",
+		"UserAlreadyExistException": "Аккаунт с этой почтой уже существует",
+		"InvalidCredentialsException": "Неверная почта или пароль",
+		"UserNotFoundException": "Пользователь не найден",
+		"TurnstileVerificationFailedException": "Проверка на бота не пройдена. Попробуйте снова",
+		"InvalidOrExpiredTokenException": "Ваша сессия истекла. Пожалуйста, войдите снова",
+		"NotCorrectTokenTypeException": "Неверный токен аутентификации",
+		"InvalidTokenPayloadException": "Токен аутентификации поврежден"
 	},
 	"validation": {
 		"required": "Это поле обязательно",

@@ -64,7 +64,17 @@
 		"notFound": "Not found",
 		"unauthorized": "Unauthorized",
 		"forbidden": "Forbidden",
-		"serverError": "Server error"
+		"serverError": "Server error",
+		"ServiceException": "Service error occurred",
+		"BadRequestException": "Invalid request data",
+		"UnauthorizedException": "You are not authorized to access this resource",
+		"UserAlreadyExistException": "An account with this email already exists",
+		"InvalidCredentialsException": "Invalid email or password",
+		"UserNotFoundException": "User not found",
+		"TurnstileVerificationFailedException": "Bot verification failed. Please try again",
+		"InvalidOrExpiredTokenException": "Your session has expired. Please sign in again",
+		"NotCorrectTokenTypeException": "Invalid authentication token",
+		"InvalidTokenPayloadException": "Authentication token is corrupted"
 	},
 	"validation": {
 		"required": "This field is required",

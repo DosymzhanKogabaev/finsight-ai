@@ -6,6 +6,7 @@ import { EmailField, PasswordField } from '../../components/fields';
 import { loginUser } from '../../redux/slices/user/asyncReducers';
 import { useAppDispatch } from '../../redux/store';
 import { AuthRoutes, MainRoutes } from '../../routes/routes';
+import { getErrorMessage } from '../../utils/errorHandler';
 import { validateLoginForm } from '../../utils/validators';
 
 export const SignIn = () => {
@@ -34,7 +35,7 @@ export const SignIn = () => {
 			await dispatch(loginUser({ email, password })).unwrap();
 			navigate(MainRoutes.PROFILE);
 		} catch (err: any) {
-			setError(err.message || t('auth.loginFailed'));
+			setError(getErrorMessage(err));
 		} finally {
 			setLoading(false);
 		}

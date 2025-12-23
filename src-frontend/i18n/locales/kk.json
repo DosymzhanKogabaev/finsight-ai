@@ -64,7 +64,17 @@
 		"notFound": "Табылмады",
 		"unauthorized": "Авторизацияланбаған",
 		"forbidden": "Тыйым салынған",
-		"serverError": "Сервер қатесі"
+		"serverError": "Сервер қатесі",
+		"ServiceException": "Қызмет қатесі орын алды",
+		"BadRequestException": "Сұрау деректері дұрыс емес",
+		"UnauthorizedException": "Бұл ресурсқа қолжетімділігіңіз жоқ",
+		"UserAlreadyExistException": "Бұл поштамен тіркелгі бар",
+		"InvalidCredentialsException": "Пошта немесе құпия сөз қате",
+		"UserNotFoundException": "Пайдаланушы табылмады",
+		"TurnstileVerificationFailedException": "Бот тексеруі сәтсіз болды. Қайталап көріңіз",
+		"InvalidOrExpiredTokenException": "Сеансыңыз аяқталды. Қайта кіріңіз",
+		"NotCorrectTokenTypeException": "Аутентификация токені жарамсыз",
+		"InvalidTokenPayloadException": "Аутентификация токені бүлінген"
 	},
 	"validation": {
 		"required": "Бұл өріс міндетті",

@@ -9,6 +9,7 @@ import { getMe } from '../redux/slices/user/asyncReducers';
 import { logout, selectCurrentUser } from '../redux/slices/user/userSlice';
 import { useAppDispatch, useAppSelector } from '../redux/store';
 import { AuthRoutes } from '../routes/routes';
+import { getErrorMessage, isAuthError } from '../utils/errorHandler';
 
 export const Profile = () => {
 	const { t } = useTranslation();
@@ -26,9 +27,9 @@ export const Profile = () => {
 				await dispatch(getMe()).unwrap();
 			} catch (err: any) {
 				console.error('Failed to fetch user data:', err);
-				setError(err.message || t('error.generic'));
+				setError(getErrorMessage(err));
 				// If unauthorized, logout and redirect
-				if (err.statusCode === 401) {
+				if (isAuthError(err)) {
 					dispatch(logout());
 					navigate(AuthRoutes.SIGN_IN);
 				}
