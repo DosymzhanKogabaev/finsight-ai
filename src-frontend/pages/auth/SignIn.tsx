@@ -1,10 +1,12 @@
-import { Alert, Box, Button, CircularProgress, Link, Paper, TextField, Typography } from '@mui/material';
+import { Alert, Box, Button, CircularProgress, Link, Paper, Typography } from '@mui/material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { EmailField, PasswordField } from '../../components/fields';
 import { loginUser } from '../../redux/slices/user/asyncReducers';
 import { useAppDispatch } from '../../redux/store';
 import { AuthRoutes, MainRoutes } from '../../routes/routes';
+import { validateLoginForm } from '../../utils/validators';
 
 export const SignIn = () => {
 	const { t } = useTranslation();
@@ -18,6 +20,14 @@ export const SignIn = () => {
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
 		setError(null);
+
+		// Validate all fields
+		const validation = validateLoginForm(email, password, t);
+		if (!validation.isValid) {
+			// Validation errors are shown in the field components
+			return;
+		}
+
 		setLoading(true);
 
 		try {
@@ -52,29 +62,9 @@ export const SignIn = () => {
 					</Alert>
 				)}
 
-				<TextField
-					fullWidth
-					label={t('auth.email')}
-					type="email"
-					placeholder={t('auth.email')}
-					margin="normal"
-					required
-					value={email}
-					onChange={(e) => setEmail(e.target.value)}
-					disabled={loading}
-				/>
+				<EmailField value={email} onChange={setEmail} disabled={loading} autoFocus />
 
-				<TextField
-					fullWidth
-					label={t('auth.password')}
-					type="password"
-					placeholder={t('auth.password')}
-					margin="normal"
-					required
-					value={password}
-					onChange={(e) => setPassword(e.target.value)}
-					disabled={loading}
-				/>
+				<PasswordField value={password} onChange={setPassword} disabled={loading} mode="login" />
 
 				<Button
 					fullWidth

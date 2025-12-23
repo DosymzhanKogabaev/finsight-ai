@@ -1,5 +1,5 @@
 import { Route, Routes } from 'react-router-dom';
-import { GuestRoute, ProtectedRoute } from '../components';
+import { GuestRoute, ProtectedRoute } from '../wrappers';
 import { Home, Profile, SignIn, SignUp } from '../pages';
 import { AuthRoutes, MainRoutes } from './routes';
 

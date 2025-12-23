@@ -1,5 +1,5 @@
 import { createBrowserRouter, Navigate } from 'react-router-dom';
-import { AppLayout } from '../components';
+import { AppLayout } from '../components/layout';
 import { AppRoutes } from './AppRoutes';
 import { MainRoutes } from './routes';
 

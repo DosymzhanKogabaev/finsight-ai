@@ -1,11 +1,13 @@
-import { Alert, Box, Button, CircularProgress, Link, Paper, TextField, Typography } from '@mui/material';
+import { Alert, Box, Button, CircularProgress, Link, Paper, Typography } from '@mui/material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import Turnstile from 'react-turnstile';
+import { EmailField, FullNameField, PasswordField } from '../../components/fields';
 import { registerUser } from '../../redux/slices/user/asyncReducers';
 import { useAppDispatch } from '../../redux/store';
 import { AuthRoutes, MainRoutes } from '../../routes/routes';
+import { validateRegisterForm } from '../../utils/validators';
 
 export const SignUp = () => {
 	const [isVerified, setIsVerified] = useState(false);
@@ -27,6 +29,13 @@ export const SignUp = () => {
 			return;
 		}
 
+		// Validate all fields
+		const validation = validateRegisterForm(fullName, email, password, t);
+		if (!validation.isValid) {
+			// Validation errors are shown in the field components
+			return;
+		}
+
 		setError(null);
 		setLoading(true);
 
@@ -42,13 +51,10 @@ export const SignUp = () => {
 			navigate(MainRoutes.PROFILE);
 		} catch (err: any) {
 			setError(err.message || t('auth.registerFailed'));
-			// TODO: retry turnstile
 		} finally {
 			setLoading(false);
 		}
 	};
-	// TODO: add validators for email, password, full name
-	// TODO: add proper error handling through i18n (probably global handler)
 
 	return (
 		<Paper
@@ -72,40 +78,11 @@ export const SignUp = () => {
 					</Alert>
 				)}
 
-				<TextField
-					fullWidth
-					label={t('auth.fullName')}
-					placeholder={t('auth.fullName')}
-					margin="normal"
-					required
-					value={fullName}
-					onChange={(e) => setFullName(e.target.value)}
-					disabled={loading}
-				/>
+				<FullNameField value={fullName} onChange={setFullName} disabled={loading} autoFocus />
 
-				<TextField
-					fullWidth
-					label={t('auth.email')}
-					type="email"
-					placeholder={t('auth.email')}
-					margin="normal"
-					required
-					value={email}
-					onChange={(e) => setEmail(e.target.value)}
-					disabled={loading}
-				/>
+				<EmailField value={email} onChange={setEmail} disabled={loading} />
 
-				<TextField
-					fullWidth
-					label={t('auth.password')}
-					type="password"
-					placeholder={t('auth.password')}
-					margin="normal"
-					required
-					value={password}
-					onChange={(e) => setPassword(e.target.value)}
-					disabled={loading}
-				/>
+				<PasswordField value={password} onChange={setPassword} disabled={loading} mode="register" />
 
 				<Box sx={{ my: 3, display: 'flex', justifyContent: 'center', height: '72px' }}>
 					<Turnstile

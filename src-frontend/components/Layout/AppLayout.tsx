@@ -1,7 +1,7 @@
 import { Box } from '@mui/material';
 import { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ThemeLanguageSwitchers } from '../ThemeLanguageSwitchers';
+import { ThemeLanguageSwitchers } from '../common/ThemeLanguageSwitchers';
 import { AppHeader } from './AppHeader';
 import { PageContainer } from './PageContainer';
 
