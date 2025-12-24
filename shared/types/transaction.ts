@@ -6,6 +6,14 @@ export type CreateTransactionRequest = {
 	occurred_at: number; // Unix timestamp
 };
 
+export type UpdateTransactionRequest = {
+	category_id?: number;
+	amount?: number;
+	currency?: string;
+	description?: string;
+	occurred_at?: number; // Unix timestamp
+};
+
 export type TransactionResponse = {
 	id: number;
 	user_id: number;
