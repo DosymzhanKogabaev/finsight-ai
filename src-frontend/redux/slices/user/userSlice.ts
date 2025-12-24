@@ -82,6 +82,7 @@ export const userSlice = createSlice({
 			infoKey: 'refreshAccessTokenInfo',
 			onFulfilled: (state, action) => {
 				state.accessToken = action.payload.access_token;
+				state.isAuthenticated = true;
 			},
 		});
 		createAsyncReducers<UserState, UserMeResponse>({

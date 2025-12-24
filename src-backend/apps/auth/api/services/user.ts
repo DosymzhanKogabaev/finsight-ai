@@ -2,17 +2,25 @@ import { RegisterUserRequest, User } from '@/shared';
 import { hashPassword } from '@/src-backend/apps/utils/password';
 import { initDbConnect } from '@/src-backend/db';
 import { userSchema } from '@/src-backend/db/schema';
-import { eq } from 'drizzle-orm';
+import { and, eq, isNull } from 'drizzle-orm';
 
 export async function getUserByEmail(env: Env, email: string): Promise<User> {
 	const db = initDbConnect(env);
-	const [user] = await db.select().from(userSchema).where(eq(userSchema.email, email)).limit(1);
+	const [user] = await db
+		.select()
+		.from(userSchema)
+		.where(and(eq(userSchema.email, email), isNull(userSchema.deleted_at)))
+		.limit(1);
 	return user;
 }
 
 export async function getUserById(env: Env, userId: number): Promise<User> {
 	const db = initDbConnect(env);
-	const [user] = await db.select().from(userSchema).where(eq(userSchema.id, userId)).limit(1);
+	const [user] = await db
+		.select()
+		.from(userSchema)
+		.where(and(eq(userSchema.id, userId), isNull(userSchema.deleted_at)))
+		.limit(1);
 	return user;
 }
 
@@ -40,11 +48,7 @@ export async function deleteUserAvatar(env: Env, userId: number): Promise<void> 
 
 	// Note: We need 2 queries here because SQLite/D1 doesn't support returning OLD values
 	// Get the current avatar URL before updating (1st query)
-	const [user] = await db
-		.select({ avatar_url: userSchema.avatar_url })
-		.from(userSchema)
-		.where(eq(userSchema.id, userId))
-		.limit(1);
+	const [user] = await db.select({ avatar_url: userSchema.avatar_url }).from(userSchema).where(eq(userSchema.id, userId)).limit(1);
 
 	// Update to remove avatar URL (2nd query)
 	await db.update(userSchema).set({ avatar_url: null }).where(eq(userSchema.id, userId));

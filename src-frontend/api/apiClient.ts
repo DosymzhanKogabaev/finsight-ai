@@ -37,9 +37,34 @@ export class ApiClient {
 
 		// Add access token to headers
 		if (useAccessToken) {
-			const accessToken = selectAccessToken(store.getState());
+			let accessToken = selectAccessToken(store.getState());
 			if (!accessToken) {
 				throw new Error('Access token not found');
+			}
+
+			// Check if access token is expired and refresh proactively
+			if (isTokenExpired(accessToken)) {
+				const refreshToken = selectRefreshToken(store.getState());
+
+				if (refreshToken && !isTokenExpired(refreshToken) && !this.isRefreshing) {
+					this.isRefreshing = true;
+					try {
+						await store.dispatch(refreshAccessToken({ refresh_token: refreshToken })).unwrap();
+						accessToken = selectAccessToken(store.getState());
+						if (!accessToken) {
+							throw new Error('Failed to refresh access token');
+						}
+						this.isRefreshing = false;
+					} catch (refreshError) {
+						this.isRefreshing = false;
+						store.dispatch(logout());
+						throw new Error('Token refresh failed');
+					}
+				} else {
+					// Refresh token is also expired or missing
+					store.dispatch(logout());
+					throw new Error('Access token expired and refresh token is invalid');
+				}
 			}
 
 			headers = {

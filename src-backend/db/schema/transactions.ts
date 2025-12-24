@@ -14,10 +14,6 @@ export const transactionsSchema = sqliteTable('transactions', {
 		.notNull()
 		.references(() => categoriesSchema.id),
 
-	type: text('type', {
-		enum: ['income', 'expense'],
-	}).notNull(),
-
 	amount: integer('amount').notNull(),
 
 	currency: text('currency').notNull().default('KZT'),

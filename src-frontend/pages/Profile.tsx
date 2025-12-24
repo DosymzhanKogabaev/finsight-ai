@@ -38,12 +38,10 @@ export const Profile = () => {
 			}
 		};
 
-		if (!currentUser) {
-			fetchUserData();
-		} else {
-			setLoading(false);
-		}
-	}, [currentUser, dispatch, navigate, t]);
+		// Always fetch user data to ensure token is valid and data is up-to-date
+		// This also triggers automatic token refresh if needed
+		fetchUserData();
+	}, [dispatch, navigate]);
 
 	const handleLogout = () => {
 		dispatch(logout());

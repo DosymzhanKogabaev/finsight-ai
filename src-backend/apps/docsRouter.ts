@@ -11,12 +11,12 @@ const API_APPS = {
 		icon: '🔐',
 		pathPattern: '/api/auth/', // Routes starting with this pattern belong to auth
 	},
-	// post: {
-	// 	title: 'Welcome Way - Posts API',
-	// 	description: 'Community posts management including creating, reading, and filtering help requests',
-	// 	icon: '📝',
-	// 	pathPattern: '/api/', // Routes starting with this pattern belong to posts (excluding auth)
-	// },
+	transactions: {
+		title: 'Finsight AI - Transactions API',
+		description: 'Transactions management including creating, reading, and filtering',
+		icon: '📝',
+		pathPattern: '/api/transactions/', // Routes starting with this pattern belong to transactions
+	},
 	// Add more apps here as needed
 	// user: {
 	//   title: "Welcome May - User API",
@@ -117,9 +117,9 @@ function filterPathsByApp(paths: any, appName: string): any {
 			if (path.includes('/auth/')) {
 				filteredPaths[path] = pathItem;
 			}
-		} else if (appName === 'post') {
-			// For posts, include post-related paths (excluding auth)
-			if (path.includes('/posts') || path.includes('/post') || path.includes('/create-post')) {
+		} else if (appName === 'transactions') {
+			// For transactions, include transaction-related paths
+			if (path.includes('/transactions/')) {
 				filteredPaths[path] = pathItem;
 			}
 		}

@@ -11,13 +11,13 @@ import {
 
 export const registerAuthRoutes: RegisterAppRoutes = (router: RouterOpenApiType, urlPrefix = null) => {
 	// Public routes
-	router.post(`${urlPrefix}/public/auth/register`, PublicRegisterAPI);
-	router.post(`${urlPrefix}/public/auth/login`, PublicLoginAPI);
-	router.post(`${urlPrefix}/public/auth/refresh`, PublicRefreshAPI);
+	router.post(`${urlPrefix}/auth/public/register`, PublicRegisterAPI);
+	router.post(`${urlPrefix}/auth/public/login`, PublicLoginAPI);
+	router.post(`${urlPrefix}/auth/public/refresh`, PublicRefreshAPI);
 
 	// Private routes (require authentication)
 	// Note: authMiddleware is applied automatically for /private/* routes in the middleware
-	router.get(`${urlPrefix}/private/auth/me`, PrivateMeAPI);
-	router.post(`${urlPrefix}/private/auth/upload-avatar`, PrivateUploadAvatarAPI);
-	router.delete(`${urlPrefix}/private/auth/delete-avatar`, PrivateDeleteAvatarAPI);
+	router.get(`${urlPrefix}/auth/private/me`, PrivateMeAPI);
+	router.post(`${urlPrefix}/auth/private/upload-avatar`, PrivateUploadAvatarAPI);
+	router.delete(`${urlPrefix}/auth/private/delete-avatar`, PrivateDeleteAvatarAPI);
 };

@@ -13,14 +13,19 @@ export default async function auth(request: IRequest, env: Env, _ctx: ExecutionC
 		if (!token) {
 			return new Response('No authorization token provided', { status: 401 });
 		}
-		try {
-			const payload = (await verifyJwt(token, env)) as JwtPayload;
-			request.user = {
-				user_id: payload.user_id,
-			};
-		} catch (error) {
-			return new Response('JWT verification failed', { status: 401 });
+
+		const result = await verifyJwt(token, env);
+
+		// Check if verifyJwt returned an error Response
+		if (result instanceof Response) {
+			return result;
 		}
+
+		// result is a JwtPayload
+		const payload = result as JwtPayload;
+		request.user = {
+			user_id: payload.user_id,
+		};
 	}
 	// If not a private route, continue without authentication
 }

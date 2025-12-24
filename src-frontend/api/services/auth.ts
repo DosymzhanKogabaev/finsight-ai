@@ -10,7 +10,7 @@ import { ApiClient } from '../apiClient';
 
 export const loginApi = async (body: LoginUserRequest): Promise<LoginUserResponse> => {
 	return await ApiClient.post<LoginUserResponse, LoginUserRequest>(
-		'/api/public/auth/login',
+		'/api/auth/public/login',
 		{
 			body,
 		},
@@ -21,7 +21,7 @@ export const loginApi = async (body: LoginUserRequest): Promise<LoginUserRespons
 
 export const registerApi = async (body: RegisterUserRequest): Promise<RegisterUserResponse> => {
 	return await ApiClient.post<RegisterUserResponse, RegisterUserRequest>(
-		'/api/public/auth/register',
+		'/api/auth/public/register',
 		{
 			body,
 		},
@@ -32,7 +32,7 @@ export const registerApi = async (body: RegisterUserRequest): Promise<RegisterUs
 
 export const refreshAccessTokenApi = async (body: RefreshAccessTokenRequest): Promise<RefreshAccessTokenResponse> => {
 	return await ApiClient.post<RefreshAccessTokenResponse, RefreshAccessTokenRequest>(
-		'/api/public/auth/refresh',
+		'/api/auth/public/refresh',
 		{
 			body,
 		},

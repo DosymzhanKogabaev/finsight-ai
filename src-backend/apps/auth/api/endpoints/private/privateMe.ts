@@ -21,7 +21,7 @@ const RESPONSE_SCHEMA = z.object({
 }) satisfies z.ZodType<UserMeResponse>;
 
 /**
- * GET /api/private/auth/me
+ * GET /api/auth/private/me
  * Get current authenticated user's information
  */
 export class PrivateMeAPI extends OpenAPIRoute {
@@ -41,8 +41,12 @@ export class PrivateMeAPI extends OpenAPIRoute {
 				throw new UnauthorizedException('User not authenticated');
 			}
 
+			console.log('Getting user by ID:', request.user.user_id);
 			const user = await getUserById(env, request.user.user_id);
+			console.log('User found:', user ? `User ID: ${user.id}, Email: ${user.email}` : 'null');
+
 			if (!user) {
+				console.error('User not found in database for user_id:', request.user.user_id);
 				throw new UnauthorizedException('User not found');
 			}
 
