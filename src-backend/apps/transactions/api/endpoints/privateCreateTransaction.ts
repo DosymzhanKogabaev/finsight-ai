@@ -1,4 +1,4 @@
-import { CreateTransactionRequest, TransactionResponse } from '@/shared';
+import { CreateTransactionRequest, Transaction } from '@/shared';
 import { createTransaction } from '@/src-backend/apps/transactions/api/services/transaction';
 import { BadRequestException, handleError, UnauthorizedException } from '@/src-backend/apps/common';
 import { OpenAPIRoute } from 'chanfana';
@@ -10,7 +10,7 @@ const REQUEST_BODY_SCHEMA = z.object({
 	amount: z.number().int().positive(),
 	currency: z.string().optional().default('KZT'),
 	description: z.string().optional(),
-	occurred_at: z.number().int().positive(),
+	occurred_at: z.number().int().positive().optional(),
 }) satisfies z.ZodType<CreateTransactionRequest>;
 
 const RESPONSE_SCHEMA = z.object({
@@ -23,7 +23,8 @@ const RESPONSE_SCHEMA = z.object({
 	occurred_at: z.number(),
 	created_at: z.number(),
 	updated_at: z.number(),
-}) satisfies z.ZodType<TransactionResponse>;
+	deleted_at: z.number().nullable(),
+}) satisfies z.ZodType<Transaction>;
 
 /**
  * POST /api/transactions/private
@@ -52,7 +53,10 @@ export class PrivateCreateTransactionAPI extends OpenAPIRoute {
 
 			// Validate occurred_at is not in the future (optional validation)
 			const now = Math.floor(Date.now() / 1000);
-			if (transactionData.occurred_at > now) {
+			if(!transactionData.occurred_at) {
+				transactionData.occurred_at = now;
+			}
+			else if (transactionData.occurred_at > now) {
 				throw new BadRequestException('Transaction date cannot be in the future');
 			}
 

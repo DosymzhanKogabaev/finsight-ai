@@ -1,0 +1,40 @@
+You are working on a fullstack SaaS product called "Finsight AI".
+
+Project summary:
+- Personal finance tracking application (income, expenses, categories, transactions)
+- Initial target market: Kazakhstan, but product is international & multilingual
+- Minimalist UI with light/dark themes
+- Monetized SaaS (subscriptions planned)
+
+Tech stack:
+- Cloudflare Workers (NOT Cloudflare Pages)
+- Frontend: React + Vite + TypeScript
+- Backend: Cloudflare Workers + itty-router + chanfana (OpenAPI)
+- Database: Cloudflare D1 (SQLite)
+- ORM: Drizzle ORM
+- Storage: Cloudflare R2 (avatars, files)
+- Auth: JWT (access + refresh tokens)
+- Anti-bot: Cloudflare Turnstile
+- CI/CD: Wrangler + GitHub
+
+Architecture notes:
+- Frontend and backend live in the same repository
+- Vite config is in the root
+- Backend code lives in src-backend
+- Frontend code lives in src-frontend
+- Shared types live in /shared
+- D1 is stateless, no connection closing required
+- Prefer single SQL queries over multiple round-trips
+
+Code style & principles:
+- Prefer explicit logic over magic
+- Security-first (auth, ownership checks, token revocation)
+- Avoid overengineering
+- Use transactions / CTEs where appropriate
+- Follow conventional commits
+
+When answering:
+- Explain WHY, not only HOW
+- Do not assume PostgreSQL features unless they work in SQLite/D1
+- Be careful with RETURNING semantics in SQLite
+- Avoid suggesting things incompatible with Cloudflare Workers
