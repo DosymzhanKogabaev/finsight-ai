@@ -12,4 +12,5 @@ interface Env {
 	ASSETS: Fetcher;
 	REFRESH_TOKENS_KV: KVNamespace;
 	R2_BUCKET: R2Bucket;
+	RATE_LIMITER_DURABLE_OBJECT: DurableObjectNamespace;
 }

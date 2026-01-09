@@ -35,5 +35,19 @@
 			"binding": "R2_BUCKET",
 			"bucket_name": "finsight-ai-r2"
 		}
+	],
+	"durable_objects": {
+		"bindings": [
+			{
+				"name": "RATE_LIMITER_DURABLE_OBJECT",
+				"class_name": "RateLimiter"
+			}
+		]
+	},
+	"migrations": [
+		{
+			"tag": "v1",
+			"new_sqlite_classes": ["RateLimiter"]
+		}
 	]
 }

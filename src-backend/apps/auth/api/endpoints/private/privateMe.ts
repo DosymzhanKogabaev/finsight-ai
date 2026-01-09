@@ -41,9 +41,9 @@ export class PrivateMeAPI extends OpenAPIRoute {
 				throw new UnauthorizedException('User not authenticated');
 			}
 
-			console.log('Getting user by ID:', request.user.user_id);
+			// console.log('Getting user by ID:', request.user.user_id);
 			const user = await getUserById(env, request.user.user_id);
-			console.log('User found:', user ? `User ID: ${user.id}, Email: ${user.email}` : 'null');
+			// console.log('User found:', user ? `User ID: ${user.id}, Email: ${user.email}` : 'null');
 
 			if (!user) {
 				console.error('User not found in database for user_id:', request.user.user_id);

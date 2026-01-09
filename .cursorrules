@@ -38,3 +38,6 @@ When answering:
 - Do not assume PostgreSQL features unless they work in SQLite/D1
 - Be careful with RETURNING semantics in SQLite
 - Avoid suggesting things incompatible with Cloudflare Workers
+
+Things to NOT do:
+- Creating README files, unless was directly asked to

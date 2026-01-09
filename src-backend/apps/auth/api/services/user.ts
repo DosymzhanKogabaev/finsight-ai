@@ -55,7 +55,7 @@ export async function deleteUserAvatar(env: Env, userId: number): Promise<void> 
 
 	// Delete the old avatar from R2 if it exists
 	if (user?.avatar_url) {
-		console.log('Deleting avatar from R2:', user.avatar_url);
+		// console.log('Deleting avatar from R2:', user.avatar_url);
 		await env.R2_BUCKET.delete(user.avatar_url);
 	}
 }

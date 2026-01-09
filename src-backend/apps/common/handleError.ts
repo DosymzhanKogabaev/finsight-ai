@@ -1,9 +1,9 @@
 export const handleError = (error: any): Response => {
 	// Special handling for validation errors that already have a status code
 	const statusCode = error?.status || error?.code;
-	console.log('statusCode:', statusCode);
+	// console.log('statusCode:', statusCode);
 	const statusCodeResult = statusCode >= 200 && statusCode <= 599 ? statusCode : 500;
-	console.log('statusCodeResult:', statusCodeResult);
+	// console.log('statusCodeResult:', statusCodeResult);
 	if (error && statusCode && error.message) {
 		return new Response(
 			JSON.stringify({

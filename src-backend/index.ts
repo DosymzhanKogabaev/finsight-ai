@@ -1,9 +1,14 @@
 import { IRequest } from 'itty-router';
 import apiRouter from './apps/apiRouter';
 import docsRouter from './apps/docsRouter';
+import { RateLimiter } from './durable-objects/rateLimiter';
 import { composeMiddlewares, Middleware } from './middlewareComposer';
 import { cdnMiddleware, optionsMiddleware, serveAssetsMiddleware } from './middlewares';
 import auth from './middlewares/jwtAuth';
+import { createRateLimiterMiddleware } from './middlewares/rateLimiter';
+
+// Export Durable Object for Cloudflare Workers
+export { RateLimiter };
 
 const middlewares: Middleware[] = [optionsMiddleware, cdnMiddleware, serveAssetsMiddleware];
 
@@ -59,6 +64,17 @@ async function handleProtectedRoute(request: IRequest, env: Env, ctx: ExecutionC
 	return await handler(request, env, ctx);
 }
 
+// Rate limiters for different scopes
+const apiRateLimiter = createRateLimiterMiddleware('api', {
+	millisecondsPerRequest: 70, // ~14 requests per second
+	gracePeriodMs: 5000,
+});
+
+const authRateLimiter = createRateLimiterMiddleware('auth', {
+	millisecondsPerRequest: 200, // 5 requests per second (stricter for auth)
+	gracePeriodMs: 5000,
+});
+
 export default {
 	async fetch(request: IRequest, env: Env, ctx: ExecutionContext): Promise<Response> {
 		try {
@@ -72,8 +88,22 @@ export default {
 				}
 			}
 
+			const url = new URL(request.url);
+			const isPrivateRoute = url.pathname.includes('private');
+			const isAuthRoute = url.pathname.includes('/auth/');
+
+			// Apply rate limiting (skip for localhost)
+			const host = request.headers.get('Host');
+			if (!host?.includes('localhost')) {
+				// Use stricter rate limiter for auth routes
+				const rateLimiter = isAuthRoute ? authRateLimiter : apiRateLimiter;
+				const rateLimitResponse = await rateLimiter(request, env, ctx, async () => null);
+				if (rateLimitResponse) {
+					return applyCors(rateLimitResponse, request);
+				}
+			}
+
 			const handler = await composeMiddlewares(middlewares, serveApi);
-			const isPrivateRoute = new URL(request.url).pathname.includes('private');
 
 			const response = isPrivateRoute ? await handleProtectedRoute(request, env, ctx, handler) : await handler(request, env, ctx);
 
