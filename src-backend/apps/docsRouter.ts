@@ -11,6 +11,12 @@ const API_APPS = {
 		icon: '🔐',
 		pathPattern: '/api/auth/', // Routes starting with this pattern belong to auth
 	},
+	categories: {
+		title: 'Finsight AI - Categories API',
+		description: 'Category management including creating, reading, updating, and deleting categories',
+		icon: '📁',
+		pathPattern: '/api/categories/', // Routes starting with this pattern belong to categories
+	},
 	transactions: {
 		title: 'Finsight AI - Transactions API',
 		description: 'Transactions management including creating, reading, and filtering',
@@ -18,12 +24,6 @@ const API_APPS = {
 		pathPattern: '/api/transactions/', // Routes starting with this pattern belong to transactions
 	},
 	// Add more apps here as needed
-	// user: {
-	//   title: "Welcome May - User API",
-	//   description: "User profile and settings management",
-	//   icon: "👤",
-	//   pathPattern: "/api/user/",
-	// },
 };
 
 // Cache for generated schemas
@@ -115,6 +115,11 @@ function filterPathsByApp(paths: any, appName: string): any {
 		if (appName === 'auth') {
 			// For auth, include only auth-related paths
 			if (path.includes('/auth/')) {
+				filteredPaths[path] = pathItem;
+			}
+		} else if (appName === 'categories') {
+			// For categories, include category-related paths
+			if (path.includes('/categories/')) {
 				filteredPaths[path] = pathItem;
 			}
 		} else if (appName === 'transactions') {

@@ -9,3 +9,21 @@ export type CategoryInfo = {
 	icon: string | null;
 	color: string | null;
 };
+
+export type CreateCategoryRequest = {
+	type: 'income' | 'expense';
+	name: string;
+	icon?: string | null;
+	color?: string | null;
+	sort_order?: number;
+};
+
+export type UpdateCategoryRequest = {
+	type?: 'income' | 'expense';
+	name?: string;
+	icon?: string | null;
+	color?: string | null;
+	sort_order?: number;
+};
+
+export type CategoryResponse = Omit<Category, 'deleted_at'>;
