@@ -1,4 +1,4 @@
-import { TransactionResponse, UpdateTransactionRequest } from '@/shared';
+import { Transaction, UpdateTransactionRequest } from '@/shared';
 import { BadRequestException, handleError, UnauthorizedException } from '@/src-backend/apps/common';
 import { updateTransaction } from '@/src-backend/apps/transactions/api/services/transaction';
 import { OpenAPIRoute } from 'chanfana';
@@ -27,7 +27,8 @@ const RESPONSE_SCHEMA = z.object({
 	occurred_at: z.number(),
 	created_at: z.number(),
 	updated_at: z.number(),
-}) satisfies z.ZodType<TransactionResponse>;
+	deleted_at: z.number().nullable(),
+}) satisfies z.ZodType<Transaction>;
 
 /**
  * PUT /api/transactions/private/:id
