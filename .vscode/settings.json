@@ -7,5 +7,10 @@
 	"editor.defaultFormatter": "esbenp.prettier-vscode",
 	"eslint.useFlatConfig": true,
 	"eslint.validate": ["typescript"],
-	"eslint.workingDirectories": ["src-frontend"]
+	"eslint.workingDirectories": ["src-frontend"],
+	"files.associations": {
+		".dev.*": "dotenv",
+		".env": "dotenv",
+		".env.*": "dotenv"
+	}
 }

@@ -32,6 +32,8 @@ Code style & principles:
 - Avoid overengineering
 - Use transactions / CTEs where appropriate
 - Follow conventional commits
+- When working on frontend, never hard-code any values such as text(use i18n keys), colors(use MUI color keys from theme), font values(use MUI typography variants, if there's no variant you want, be free to add it to the theme)
+- Break down huge page designs into small components
 
 When answering:
 - Explain WHY, not only HOW

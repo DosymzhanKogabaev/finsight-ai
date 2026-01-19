@@ -86,5 +86,53 @@
 	"turnstile": {
 		"verifying": "Проверяем, что вы человек...",
 		"failed": "Проверка не удалась. Пожалуйста, попробуйте снова."
+	},
+	"navigation": {
+		"dashboard": "Главная",
+		"transactions": "Транзакции",
+		"analytics": "Аналитика",
+		"categories": "Категории"
+	},
+	"dashboard": {
+		"title": "Главная",
+		"totalBalance": "Общий баланс",
+		"expenseBreakdown": "Структура расходов",
+		"income": "Доходы",
+		"expenses": "Расходы",
+		"net": "Чистый",
+		"good": "Хорошо",
+		"poor": "Плохо",
+		"recentTransactions": "Последние транзакции",
+		"viewAll": "Показать все",
+		"noTransactions": "Транзакций пока нет",
+		"addTransaction": "Добавить транзакцию"
+	},
+	"transactions": {
+		"title": "Транзакции",
+		"income": "Доход",
+		"expense": "Расход",
+		"amount": "Сумма",
+		"category": "Категория",
+		"description": "Описание",
+		"date": "Дата",
+		"create": "Создать транзакцию",
+		"edit": "Редактировать транзакцию",
+		"delete": "Удалить транзакцию"
+	},
+	"categories": {
+		"title": "Категории",
+		"name": "Название",
+		"type": "Тип",
+		"icon": "Иконка",
+		"color": "Цвет",
+		"create": "Создать категорию",
+		"edit": "Редактировать категорию",
+		"delete": "Удалить категорию"
+	},
+	"analytics": {
+		"title": "Аналитика",
+		"incomeVsExpenses": "Доходы vs Расходы",
+		"trends": "Тренды",
+		"byCategory": "По категориям"
 	}
 }

@@ -86,5 +86,53 @@
 	"turnstile": {
 		"verifying": "Verifying you are human...",
 		"failed": "Verification failed. Please try again."
+	},
+	"navigation": {
+		"dashboard": "Dashboard",
+		"transactions": "Transactions",
+		"analytics": "Analytics",
+		"categories": "Categories"
+	},
+	"dashboard": {
+		"title": "Dashboard",
+		"totalBalance": "Total Balance",
+		"expenseBreakdown": "Expense Breakdown",
+		"income": "Income",
+		"expenses": "Expenses",
+		"net": "Net",
+		"good": "Good",
+		"poor": "Poor",
+		"recentTransactions": "Recent Transactions",
+		"viewAll": "View all",
+		"noTransactions": "No transactions yet",
+		"addTransaction": "Add Transaction"
+	},
+	"transactions": {
+		"title": "Transactions",
+		"income": "Income",
+		"expense": "Expense",
+		"amount": "Amount",
+		"category": "Category",
+		"description": "Description",
+		"date": "Date",
+		"create": "Create Transaction",
+		"edit": "Edit Transaction",
+		"delete": "Delete Transaction"
+	},
+	"categories": {
+		"title": "Categories",
+		"name": "Name",
+		"type": "Type",
+		"icon": "Icon",
+		"color": "Color",
+		"create": "Create Category",
+		"edit": "Edit Category",
+		"delete": "Delete Category"
+	},
+	"analytics": {
+		"title": "Analytics",
+		"incomeVsExpenses": "Income vs Expenses",
+		"trends": "Trends",
+		"byCategory": "By Category"
 	}
 }

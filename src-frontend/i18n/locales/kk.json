@@ -86,5 +86,53 @@
 	"turnstile": {
 		"verifying": "Сіз адам екеніңізді тексеруде...",
 		"failed": "Тексеру сәтсіз болды. Қайталап көріңіз."
+	},
+	"navigation": {
+		"dashboard": "Басты бет",
+		"transactions": "Транзакциялар",
+		"analytics": "Аналитика",
+		"categories": "Санаттар"
+	},
+	"dashboard": {
+		"title": "Басты бет",
+		"totalBalance": "Жалпы баланс",
+		"expenseBreakdown": "Шығындар құрылымы",
+		"income": "Кіріс",
+		"expenses": "Шығындар",
+		"net": "Таза",
+		"good": "Жақсы",
+		"poor": "Нашар",
+		"recentTransactions": "Соңғы транзакциялар",
+		"viewAll": "Барлығын көрсету",
+		"noTransactions": "Транзакциялар әлі жоқ",
+		"addTransaction": "Транзакция қосу"
+	},
+	"transactions": {
+		"title": "Транзакциялар",
+		"income": "Кіріс",
+		"expense": "Шығын",
+		"amount": "Сома",
+		"category": "Санат",
+		"description": "Сипаттама",
+		"date": "Күн",
+		"create": "Транзакция жасау",
+		"edit": "Транзакцияны өңдеу",
+		"delete": "Транзакцияны жою"
+	},
+	"categories": {
+		"title": "Санаттар",
+		"name": "Атауы",
+		"type": "Түрі",
+		"icon": "Белгіше",
+		"color": "Түс",
+		"create": "Санат жасау",
+		"edit": "Санатты өңдеу",
+		"delete": "Санатты жою"
+	},
+	"analytics": {
+		"title": "Аналитика",
+		"incomeVsExpenses": "Кіріс vs Шығындар",
+		"trends": "Трендтер",
+		"byCategory": "Санаттар бойынша"
 	}
 }
