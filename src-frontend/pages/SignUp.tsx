@@ -3,12 +3,11 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import Turnstile from 'react-turnstile';
-import { EmailField, FullNameField, PasswordField } from '../../components/fields';
-import { registerUser } from '../../redux/slices/user/asyncReducers';
-import { useAppDispatch } from '../../redux/store';
-import { AuthRoutes, MainRoutes } from '../../routes/routes';
-import { getErrorMessage } from '../../utils/errorHandler';
-import { validateRegisterForm } from '../../utils/validators';
+import { useAppDispatch } from '../redux/hooks';
+import { registerUser } from '../redux/slices/user/asyncReducers';
+import { getErrorMessage, validateRegisterForm } from '../utils';
+import { AuthRoutes, MainRoutes } from '../routes/routes';
+import { EmailField, FullNameField, PasswordField } from '../components/fields';
 
 export const SignUp = () => {
 	const [isVerified, setIsVerified] = useState(false);

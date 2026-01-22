@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { getMe } from '../redux/slices/user/asyncReducers';
 import { logout, selectCurrentUser } from '../redux/slices/user/userSlice';
-import { useAppDispatch, useAppSelector } from '../redux/store';
+import { useAppDispatch, useAppSelector } from '../redux/hooks';
 import { AuthRoutes } from '../routes/routes';
 import { getErrorMessage, isAuthError } from '../utils/errorHandler';
 

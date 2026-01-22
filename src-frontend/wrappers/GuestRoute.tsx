@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import { Navigate } from 'react-router-dom';
 import { selectIsAuthenticated } from '../redux/slices/user/userSlice';
-import { useAppSelector } from '../redux/store';
+import { useAppSelector } from '../redux/hooks';
 import { MainRoutes } from '../routes/routes';
 
 interface GuestRouteProps {

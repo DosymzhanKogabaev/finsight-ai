@@ -2,12 +2,11 @@ import { Alert, Box, Button, CircularProgress, Link, Paper, Typography } from '@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
-import { EmailField, PasswordField } from '../../components/fields';
-import { loginUser } from '../../redux/slices/user/asyncReducers';
-import { useAppDispatch } from '../../redux/store';
-import { AuthRoutes, MainRoutes } from '../../routes/routes';
-import { getErrorMessage } from '../../utils/errorHandler';
-import { validateLoginForm } from '../../utils/validators';
+import { useAppDispatch } from '../redux/hooks';
+import { loginUser } from '../redux/slices/user/asyncReducers';
+import { getErrorMessage, validateLoginForm } from '../utils';
+import { MainRoutes, AuthRoutes } from '../routes/routes';
+import { EmailField, PasswordField } from '../components/fields';
 
 export const SignIn = () => {
 	const { t } = useTranslation();

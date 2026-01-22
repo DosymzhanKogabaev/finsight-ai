@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
 import { MainRoutes } from '../../routes/routes/main';
 import { ThemeLanguageSwitchers } from '../common/ThemeLanguageSwitchers';
-import { BottomNav } from '../navigation';
+import { BottomNav } from './BottomNav';
 import { AppHeader } from './AppHeader';
 import { PageContainer } from './PageContainer';
 

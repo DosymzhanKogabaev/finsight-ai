@@ -6,7 +6,7 @@ import { ExpenseBreakdown, RecentTransactions, SummaryCards } from '../component
 import { getCategories } from '../redux/slices/categories/asyncReducers';
 import { getTransactions } from '../redux/slices/transactions/asyncReducers';
 import { selectTransactions } from '../redux/slices/transactions/transactionsSlice';
-import { useAppDispatch, useAppSelector } from '../redux/store';
+import { useAppDispatch, useAppSelector } from '../redux/hooks';
 
 /**
  * Dashboard page - Main view with balance, expense breakdown, and recent transactions
