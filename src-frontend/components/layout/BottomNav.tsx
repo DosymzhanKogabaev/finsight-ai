@@ -45,7 +45,7 @@ export const BottomNav = () => {
 				maxWidth: 'var(--xs)',
 				mx: 'auto',
 			}}
-			elevation={3}
+			elevation={4}
 		>
 			<BottomNavigation showLabels value={getCurrentTab()} onChange={handleChange}>
 				<BottomNavigationAction

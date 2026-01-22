@@ -158,6 +158,16 @@ export const createTheme = (mode: ThemeMode) => {
 						},
 					},
 				},
+				MuiCardContent: {
+					styleOverrides: {
+						root: {
+							padding: '16px',
+							'&:last-child': {
+								paddingBottom: '16px',
+							},
+						},
+					},
+				},
 				MuiDivider: {
 					styleOverrides: {
 						root: {
@@ -174,7 +184,7 @@ export const createTheme = (mode: ThemeMode) => {
 					},
 				},
 			},
-		})
+		}),
 	);
 };
 /**

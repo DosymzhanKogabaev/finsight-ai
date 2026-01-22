@@ -16,6 +16,7 @@ import {
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { MainRoutes } from '../../routes/routes/main';
+import { formatTransactionAmount } from '../../utils';
 
 interface RecentTransactionsProps {
 	transactions: TransactionResponse[];
@@ -31,11 +32,6 @@ export const RecentTransactions = ({ transactions, currency = '₸' }: RecentTra
 	const theme = useTheme();
 	const navigate = useNavigate();
 
-	const formatAmount = (amount: number, type: 'income' | 'expense') => {
-		const sign = type === 'income' ? '+' : '-';
-		return `${sign}${currency}${Math.abs(amount).toLocaleString()}`;
-	};
-
 	const formatDate = (timestamp: number) => {
 		const date = new Date(timestamp * 1000);
 		const month = date.toLocaleDateString('en', { month: 'short' });
@@ -49,7 +45,7 @@ export const RecentTransactions = ({ transactions, currency = '₸' }: RecentTra
 
 	if (transactions.length === 0) {
 		return (
-			<Card>
+			<Card elevation={4}>
 				<CardContent>
 					<Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
 						<Typography variant="h6">{t('dashboard.recentTransactions')}</Typography>
@@ -63,7 +59,7 @@ export const RecentTransactions = ({ transactions, currency = '₸' }: RecentTra
 	}
 
 	return (
-		<Card>
+		<Card elevation={4}>
 			<CardContent>
 				<Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
 					<Typography variant="h6">{t('dashboard.recentTransactions')}</Typography>
@@ -125,7 +121,7 @@ export const RecentTransactions = ({ transactions, currency = '₸' }: RecentTra
 												color: isIncome ? 'success.main' : 'text.primary',
 											}}
 										>
-											{formatAmount(transaction.amount, transaction.category.type)}
+											{formatTransactionAmount(transaction.amount, transaction.category.type, currency)}
 										</Typography>
 										<Typography variant="body2" color="text.secondary">
 											{formatDate(transaction.occurred_at)}

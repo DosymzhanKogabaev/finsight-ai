@@ -30,6 +30,8 @@ export const AppLayout = ({ children }: AppLayoutProps) => {
 		MainRoutes.CATEGORIES,
 	].includes(location.pathname as MainRoutes);
 
+	const showHeader = !showBottomNav;
+
 	return (
 		<Box
 			sx={{
@@ -42,7 +44,7 @@ export const AppLayout = ({ children }: AppLayoutProps) => {
 				paddingBottom: showBottomNav ? '56px' : 0, // Height of BottomNavigation
 			}}
 		>
-			<AppHeader title={t('common.welcome')} rightContent={<ThemeLanguageSwitchers />} />
+			{showHeader && <AppHeader title={t('common.welcome')} rightContent={<ThemeLanguageSwitchers />} />}
 			<PageContainer>{children}</PageContainer>
 			{showBottomNav && <BottomNav />}
 		</Box>

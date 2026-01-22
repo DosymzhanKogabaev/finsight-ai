@@ -3,10 +3,11 @@ import { Box, Card, CardContent, Fab, MenuItem, Select, Typography, useTheme } f
 import { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ExpenseBreakdown, RecentTransactions, SummaryCards } from '../components/dashboard';
+import { useAppDispatch, useAppSelector } from '../redux/hooks';
 import { getCategories } from '../redux/slices/categories/asyncReducers';
 import { getTransactions } from '../redux/slices/transactions/asyncReducers';
 import { selectTransactions } from '../redux/slices/transactions/transactionsSlice';
-import { useAppDispatch, useAppSelector } from '../redux/hooks';
+import { formatAmount } from '../utils';
 
 /**
  * Dashboard page - Main view with balance, expense breakdown, and recent transactions
@@ -47,8 +48,6 @@ export const Dashboard = () => {
 
 		const expenses = transactions.filter((t) => t.category.type === 'expense').reduce((sum, t) => sum + t.amount, 0);
 
-		const net = income - expenses;
-
 		// Mock percentage changes (in a real app, compare with previous period)
 		return {
 			income: {
@@ -65,13 +64,7 @@ export const Dashboard = () => {
 				isPositive: true,
 				type: 'expense' as const,
 			},
-			net: {
-				label: t('dashboard.net'),
-				amount: net,
-				change: 15,
-				isPositive: net >= 0,
-				type: 'net' as const,
-			},
+			totalBalance: income - expenses,
 		};
 	}, [transactions, t]);
 
@@ -103,9 +96,6 @@ export const Dashboard = () => {
 		return [...transactions].sort((a, b) => b.occurred_at - a.occurred_at).slice(0, 5);
 	}, [transactions]);
 
-	// Calculate total balance
-	const totalBalance = summaryData.net.amount;
-
 	// Generate month options (last 12 months)
 	const monthOptions = useMemo(() => {
 		const options = [];
@@ -120,17 +110,17 @@ export const Dashboard = () => {
 	}, []);
 
 	return (
-		<Box sx={{ pb: 2 }}>
+		<Box>
 			{/* Header with balance and month selector */}
-			<Box sx={{ mb: 3 }}>
-				<Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 2 }}>
-					<Typography variant="h4" fontWeight={700}>
+			<Box sx={{ mb: 1 }}>
+				<Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 1 }}>
+					<Typography variant="h1" fontWeight={700}>
 						{t('dashboard.title')}
 					</Typography>
 					<AddIcon sx={{ fontSize: 28, color: 'text.primary', cursor: 'pointer' }} />
 				</Box>
 
-				<Card sx={{ mb: 2 }}>
+				<Card elevation={4}>
 					<CardContent>
 						<Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
 							<Box>
@@ -138,7 +128,7 @@ export const Dashboard = () => {
 									{t('dashboard.totalBalance')}
 								</Typography>
 								<Typography variant="h3" fontWeight={700}>
-									₸{totalBalance.toLocaleString()}
+									{formatAmount(summaryData.totalBalance, {showSign: true})}
 								</Typography>
 							</Box>
 							<Select
@@ -158,17 +148,17 @@ export const Dashboard = () => {
 				</Card>
 			</Box>
 
+			{/* Summary Cards */}
+			<Box sx={{ mb: 1 }}>
+				<SummaryCards income={summaryData.income} expenses={summaryData.expenses} />
+			</Box>
+
 			{/* Expense Breakdown Chart */}
 			{expenseBreakdown.length > 0 && (
-				<Box sx={{ mb: 3 }}>
+				<Box sx={{ mb: 1 }}>
 					<ExpenseBreakdown data={expenseBreakdown} />
 				</Box>
 			)}
-
-			{/* Summary Cards */}
-			<Box sx={{ mb: 3 }}>
-				<SummaryCards income={summaryData.income} expenses={summaryData.expenses} net={summaryData.net} />
-			</Box>
 
 			{/* Recent Transactions */}
 			<Box>

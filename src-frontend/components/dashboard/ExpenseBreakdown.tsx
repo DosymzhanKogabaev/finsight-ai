@@ -24,7 +24,7 @@ export const ExpenseBreakdown = ({ data }: ExpenseBreakdownProps) => {
 	const total = data.reduce((sum, item) => sum + item.value, 0);
 
 	return (
-		<Card>
+		<Card elevation={4} sx={{ mb: 1 }}>
 			<CardContent>
 				<Typography variant="h6" gutterBottom>
 					{t('dashboard.expenseBreakdown')}
@@ -52,8 +52,8 @@ export const ExpenseBreakdown = ({ data }: ExpenseBreakdownProps) => {
 							pointerEvents: 'none',
 						}}
 					>
-						<Typography variant="body2" color="text.secondary" sx={{ fontSize: '0.75rem' }}>
-							{t('dashboard.expenseBreakdown')}
+						<Typography variant="h3" color="text.secondary" sx={{width: '100%'}}>
+							{t('dashboard.expenses')}
 						</Typography>
 					</Box>
 				</Box>

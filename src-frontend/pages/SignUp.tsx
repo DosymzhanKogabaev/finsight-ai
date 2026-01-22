@@ -58,7 +58,7 @@ export const SignUp = () => {
 
 	return (
 		<Paper
-			elevation={3}
+			elevation={4}
 			sx={{
 				p: { xs: 3, sm: 4 },
 				display: 'flex',

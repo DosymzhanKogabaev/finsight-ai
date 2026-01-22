@@ -13,7 +13,7 @@ interface AppHeaderProps {
  */
 export const AppHeader = ({ title, leftContent, rightContent }: AppHeaderProps) => {
 	return (
-		<AppBar position="static" color="default" elevation={1}>
+		<AppBar position="static" color="default" elevation={4}>
 			<Toolbar>
 				<Box
 					sx={{

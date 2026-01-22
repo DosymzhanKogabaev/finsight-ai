@@ -60,7 +60,6 @@ export const userSlice = createSlice({
 			asyncThunk: loginUser,
 			infoKey: 'loginInfo',
 			onFulfilled: (state, action) => {
-				console.log('action', action.payload.access_token);
 				state.accessToken = action.payload.access_token;
 				state.refreshToken = action.payload.refresh_token;
 				state.isAuthenticated = true;
